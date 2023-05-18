@@ -2,7 +2,8 @@
 
 #ignore node_modules
 /node_modules
-
+#ignore build folder
+/build
 #ignore env files
 .env
 .env*

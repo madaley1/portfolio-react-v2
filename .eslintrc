@@ -1,13 +1,36 @@
 {
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["prettier"],
+  "extends": [
+    "eslint:recommended", 
+    "prettier", 
+    "react-app", 
+    "react-app/jest"
+  ],
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "sourceType": "module",
+    "ecmaVersion": 2022,
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": true
+    }
+  },
   "rules": {
     "prettier/prettier": [
       "error", 
       {
         "endOfLine": "lf",
         "singleQuote": true,
-        "trailingComma": "none",
+        "trailingComma": "none"
       }
     ],
     "no-console": "warn",
@@ -23,17 +46,5 @@
       "exports": "never",
       "functions": "never"
     }]
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2015,
-    "ecmaFeatures": {
-      "jsx": true
-    }
   }
 }
