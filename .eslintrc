@@ -1,0 +1,39 @@
+{
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error", 
+      {
+        "endOfLine": "lf",
+        "singleQuote": true,
+        "trailingComma": "none",
+      }
+    ],
+    "no-console": "warn",
+    "no-undef": "error",
+    "no-unused-vars": "warn",
+    "semi": 2,
+    "no-extra-semi": 2,
+    "quotes": [2, "single", "avoid-escape"],
+    "comma-dangle": ["error", {
+      "arrays": "never",
+      "objects": "never",
+      "imports": "never",
+      "exports": "never",
+      "functions": "never"
+    }]
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2015,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}
