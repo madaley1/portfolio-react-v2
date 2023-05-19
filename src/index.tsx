@@ -2,6 +2,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
+// component imports
+import App from './components/App';
+
+// style imports
+import './styles/css/main.css';
+
 // icon imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,7 +21,7 @@ const root = createRoot(rootElement);
 //the app
 root.render(
   <React.StrictMode>
-    <h1> Hello World </h1>
+    <App />
   </React.StrictMode>
 );
 
