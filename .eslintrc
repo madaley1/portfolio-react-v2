@@ -3,7 +3,7 @@
     "eslint:recommended", 
     "prettier", 
     "react-app", 
-    "react-app/jest"
+    "next/core-web-vitals"
   ],
   "plugins": [
     "prettier",
