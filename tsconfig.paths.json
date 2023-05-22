@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@Components": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "mainCSS": ["src/styles/css/main.css"]
+    },
+    "extends": "./tsconfig.paths.json",
+    "include": ["src"],
+    "exclude": ["node_modules", "public"]
+  }
+}
