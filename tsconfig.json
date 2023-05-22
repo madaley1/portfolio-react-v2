@@ -1,69 +1,19 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-
-    // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'.
     "target": "es5",
-
-    // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'.
-    "module": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
-    // Allow javascript files to be compiled.
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    // Specify JSX code generation: 'preserve', 'react-native', or 'react'.
-    "jsx": "react",
     "skipLibCheck": true,
-    // Report errors in .js files.
-    "checkJs": true,
-    // Do not emit outputs.
-    "noEmit": false,
-    // Do not emit comments to output.
-    "removeComments": true,
-
-    /* Strict Type-Checking Options */
-
-    // Enable all strict type-checking options.
     "strict": true,
-
-    // Raise error on expressions and declarations with an implied 'any' type.
-    "noImplicitAny": true,
-    // Enable strict null checks.
-    "strictNullChecks": true,
-    // Enable strict checking of function types.
-    "strictFunctionTypes": true,
-    // Enable strict 'bind', 'call', and 'apply' methods on functions.
-    "strictBindCallApply": true,
-    // Enable strict checking of property initialization in classes.
-    "strictPropertyInitialization": true,
-    // Raise error on 'this' expressions with an implied 'any' type.
-    "noImplicitThis": true,
-
-    // Parse in strict mode and emit "use strict" for each source file.
-    "alwaysStrict": true,
-
-    /* Module Resolution Options */
-
-    // Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6).
-    "moduleResolution": "node",
-
-    // List of folders to include type definitions from.
-    "typeRoots": ["./node_modules/@types", "./@types"],
-    "resolveJsonModule": true,
-
-    // Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects ffor all imports. Implies 'allowSyntheticDefaultImports'.
-    "esModuleInterop": true,
-
-    /* Experimental Options */
-
-    // Enables experimental support for ES7 decorators.
-    "experimentalDecorators": true,
-
-    // Enables experimental support for emitting type metadata for decorators.
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "isolatedModules": true,
+    "jsx": "preserve",
     "incremental": true,
-
     "plugins": [
       {
         "name": "next"
@@ -73,7 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "extends": "./tsconfig.paths.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
