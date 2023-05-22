@@ -4,10 +4,11 @@
   "private": true,
   "description": "The second iteration of a react portfolio, this time being truly full-stack via MERN, cleaning up the code (via DRY and other principles), and adding Typescript and SASS for readability and safety.",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "build": "next build",
+    "test": "next test",
+    "eject": "next eject",
+    "webpackStart": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +32,9 @@
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
     "typescript": "5.0.4"
+
+  },
+  "devDependencies": {
   },
   "browserslist": {
     "production": [

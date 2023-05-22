@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
     /* Basic Options */
 
     // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'.
@@ -8,20 +7,16 @@
 
     // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'.
     "module": "esnext",
-    "lib": ["dom", "es2017", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
+    // Allow javascript files to be compiled.
+    "allowJs": true,
     // Specify JSX code generation: 'preserve', 'react-native', or 'react'.
     "jsx": "react",
     "skipLibCheck": true,
-
-    // Allow javascript files to be compiled.
-    "allowJs": true,
-
     // Report errors in .js files.
     "checkJs": true,
-
     // Do not emit outputs.
     "noEmit": false,
-
     // Do not emit comments to output.
     "removeComments": true,
 
@@ -32,19 +27,14 @@
 
     // Raise error on expressions and declarations with an implied 'any' type.
     "noImplicitAny": true,
-
     // Enable strict null checks.
     "strictNullChecks": true,
-
     // Enable strict checking of function types.
     "strictFunctionTypes": true,
-
     // Enable strict 'bind', 'call', and 'apply' methods on functions.
     "strictBindCallApply": true,
-
     // Enable strict checking of property initialization in classes.
     "strictPropertyInitialization": true,
-
     // Raise error on 'this' expressions with an implied 'any' type.
     "noImplicitThis": true,
 
@@ -58,10 +48,9 @@
 
     // List of folders to include type definitions from.
     "typeRoots": ["./node_modules/@types", "./@types"],
-
     "resolveJsonModule": true,
 
-    // Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'.
+    // Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects ffor all imports. Implies 'allowSyntheticDefaultImports'.
     "esModuleInterop": true,
 
     /* Experimental Options */
@@ -72,8 +61,19 @@
     // Enables experimental support for emitting type metadata for decorators.
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "incremental": true,
-    
+
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "extends": "./tsconfig.paths.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
