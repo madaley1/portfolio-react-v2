@@ -85,6 +85,9 @@ body {
   overflow-x: hidden;
 }
 
+/**
+ * This is a holdover from the original Next.js starter template.
+ */
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

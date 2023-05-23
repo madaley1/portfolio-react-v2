@@ -2,12 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@Components": ["src/components/*"],
-      "@styles/*": ["src/styles/*"],
-      "mainCSS": ["src/styles/css/main.css"]
+      "@/*": ["./src/*"],
+      "@/App/*": ["src/app/*"],
+      "@/Assets/*": ["src/assets/*"],
+      "@/Components/*": ["src/components/*"],
+      "@/Pages/*": ["src/pages/*"],
+      "@/Styles/*": ["src/styles/*"],
     },
-    "extends": "./tsconfig.paths.json",
-    "include": ["src"],
-    "exclude": ["node_modules", "public"]
   }
 }
