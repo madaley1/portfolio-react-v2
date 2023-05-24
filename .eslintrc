@@ -1,14 +1,15 @@
 {
   "extends": [
     "eslint:recommended", 
+    "plugin:@typescript-eslint/recommended",
     "prettier", 
-    "react-app", 
     "next/core-web-vitals"
   ],
   "plugins": [
     "prettier",
     "@typescript-eslint"
   ],
+  "root": true,
   "env": {
     "browser": true,
     "node": true,
@@ -39,6 +40,7 @@
     "semi": 2,
     "no-extra-semi": 2,
     "quotes": [2, "single", "avoid-escape"],
+    "indent": ["error", 2],
     "comma-dangle": ["error", {
       "arrays": "never",
       "objects": "never",
