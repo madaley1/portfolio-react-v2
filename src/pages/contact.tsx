@@ -1,8 +1,3 @@
-// Component Imports
-
-// Style Imports
-import '@/Styles/css/main.css';
-
 export default function Contact() {
   return (
     <div>
