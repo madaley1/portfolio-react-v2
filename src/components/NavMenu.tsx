@@ -32,10 +32,10 @@ export default function NavMenu() {
   }, [menu, navInfo]);
 
   return (
-    <nav>
-      <ul>
+    <nav className="navMenu">
+      <ul className="navMenu-list">
         {navInfo.map((item: Record<string, string>) => (
-          <Link key={item.link} href={item.link}>
+          <Link className="navMenu-list-item" key={item.link} href={item.link}>
             {item.name}
           </Link>
         ))}
