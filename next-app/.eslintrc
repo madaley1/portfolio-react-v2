@@ -6,8 +6,8 @@
     "next/core-web-vitals"
   ],
   "plugins": [
-    "prettier",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "prettier"
   ],
   "root": true,
   "env": {
@@ -31,7 +31,15 @@
       {
         "endOfLine": "lf",
         "singleQuote": true,
-        "trailingComma": "none"
+        "trailingComma": "none",
+        "block-closing-brace-newline-after": "always-multi-line",
+        "block-closing-brace-empty-line-before": "never",
+        "block-closing-brace-space-before": "always",
+        "block-opening-brace-space-after": "always",
+        "block-opening-brace-space-before": "always",
+        "block-closing-brace-newline-before": "always-multi-line",
+        "block-opening-brace-newline-after": "always-multi-line",
+        "indentation": 2
       }
     ],
     "no-console": "warn",

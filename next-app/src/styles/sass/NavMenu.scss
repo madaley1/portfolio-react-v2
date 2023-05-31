@@ -1,0 +1,13 @@
+.navMenu {
+  width: 15vw;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+
+  &-list {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+}

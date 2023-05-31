@@ -12,6 +12,7 @@ module.exports = {
     });
 
     const paths = files.map((file) => {
+      if (file === '_app.tsx') return;
       if (file == 'index.tsx') {
         return {
           link: '',

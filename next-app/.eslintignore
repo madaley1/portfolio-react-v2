@@ -3,7 +3,6 @@
 
 #ignore non-es files
 *.php
-*.scss
 
 #ignore node_modules
 /node_modules
