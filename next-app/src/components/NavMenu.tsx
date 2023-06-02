@@ -1,7 +1,12 @@
 // imports
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, createRef, Component } from 'react';
 
+// next imports
+import Image from 'next/image';
 import Link from 'next/link';
+
+//image imports
+import logo from '@/Assets/images/logoLight.png';
 
 // types
 type navItem = {
@@ -9,72 +14,150 @@ type navItem = {
   link: string;
 };
 
-// Parse and convert the string value of the environment variable
-function parseNavItems(value: unknown) {
-  if (!value) {
-    return []; // or handle the absence of value accordingly
+export default class NavMenu extends Component {
+  navMenuRef: React.RefObject<HTMLElement>;
+  classes: string[] = ['navMenu'];
+  state = {
+    classes: ['navMenu'],
+    navInfo: [
+      {
+        name: 'Home',
+        link: '/'
+      }
+    ],
+    menuReturned: false
+  };
+  constructor(props: any) {
+    super(props);
+    this.navMenuRef = createRef();
   }
 
-  try {
-    if (Array.isArray(value)) {
-      // Perform type checks for each item in the parsed array
-      const validItems = value.filter(
-        (item: unknown): item is navItem =>
-          typeof item === 'object' &&
-          item !== null &&
-          'name' in item &&
-          typeof item.name === 'string' &&
-          'link' in item &&
-          typeof item.link === 'string'
-      );
-
-      return validItems;
+  parseNavItems(value: unknown) {
+    if (!value) {
+      return []; // or handle the absence of value accordingly
     }
-  } catch (error) {
-    console.error('Error parsing navItems from environment variable:', error);
+
+    try {
+      if (Array.isArray(value)) {
+        // Perform type checks for each item in the parsed array
+        const validItems = value.filter(
+          (item: unknown): item is navItem =>
+            typeof item === 'object' &&
+            item !== null &&
+            'name' in item &&
+            typeof item.name === 'string' &&
+            'link' in item &&
+            typeof item.link === 'string'
+        );
+
+        return validItems;
+      }
+    } catch (error) {
+      console.error('Error parsing navItems from environment variable:', error);
+    }
+
+    return []; // or handle parsing failure accordingly
   }
 
-  return []; // or handle parsing failure accordingly
-}
-
-// exports
-export default function NavMenu() {
-  const { menu } = process.env;
-  const menuData: navItem[] = parseNavItems(menu);
-  const [menuReturned, setMenuReturned] = useState(false);
-  const [navInfo, setNavInfo] = useState([
-    {
-      name: 'Home',
-      link: ''
-    }
-  ]);
-
-  useEffect(() => {
-    if (menuReturned) return;
-    if (menuData && menuData.length > 0) {
-      if (navInfo === menuData) return;
-      setNavInfo(menuData);
-      setMenuReturned(true);
-      console.log(menuData);
+  setFlickerSettings = (duration = 5) => {
+    if (typeof window !== undefined) {
+      switch (window.location.pathname) {
+        case '/' || '':
+        default:
+          this.setState({
+            classes: [...new Set([...this.state.classes, 'green'])]
+          });
+          break;
+        case '/about' || '/about/':
+          this.setState({
+            classes: [...new Set([...this.state.classes, 'yellow'])]
+          });
+          break;
+        case '/projects' || '/projects/':
+          this.setState({
+            classes: [...new Set([...this.state.classes, 'purple'])]
+          });
+          break;
+        case '/contact' || '/contact/':
+          this.setState({
+            classes: [...new Set([this.state.classes, 'blue'])]
+          });
+          break;
+      }
     } else {
-      setNavInfo([
-        {
-          name: 'Home',
-          link: '/'
-        }
-      ]);
+      this.setState({ classes: [...this.state.classes, 'green'] });
     }
-  }, [menu, navInfo, menuReturned]);
 
-  return (
-    <nav className="navMenu">
-      <ul className="navMenu-list">
-        {navInfo.map((item: navItem) => (
-          <Link className="navMenu-list-item" key={item.link} href={item.link}>
-            {item.name}
-          </Link>
-        ))}
-      </ul>
-    </nav>
-  );
+    // find diff
+    const difference = 30 - 5;
+
+    // generate random number
+    let rand = Math.random();
+
+    // multiply with difference
+    rand = Math.floor(rand * difference);
+
+    // add with min value
+    const animationDuration = rand + 5;
+    if (!this.navMenuRef.current) return;
+    this.navMenuRef.current.style.setProperty(
+      '--random-number',
+      animationDuration + 's'
+    );
+    setTimeout(() => {
+      if (duration === 5) this.setFlickerSettings();
+      else {
+        this.setFlickerSettings(animationDuration - 1);
+      }
+      return animationDuration;
+    }, animationDuration * 1000);
+  };
+  componentDidMount(): void {
+    const { menu } = process.env;
+
+    const menuData: navItem[] = this.parseNavItems(menu);
+    if (!this.state.menuReturned) {
+      if (menuData && menuData.length > 0) {
+        if (this.state.navInfo === menuData) return;
+        this.setState({ navInfo: menuData });
+        this.setState({ menuReturned: true });
+      } else {
+        this.setState({
+          navInfo: [
+            {
+              name: 'Home',
+              link: '/'
+            }
+          ]
+        });
+      }
+    }
+
+    this.setFlickerSettings();
+  }
+
+  render() {
+    const classList = this.state.classes.join(' ');
+    return (
+      <nav className={classList} ref={this.navMenuRef}>
+        <a href="/">
+          <Image src={logo} alt="Portfolio logo" width="150" />
+        </a>
+        <ul className="navMenu-list">
+          <li>
+            <Link className="navMenu-list-item" href="/">
+              Home
+            </Link>
+          </li>
+          {this.state.navInfo.map((item: navItem) => (
+            <li key={item.name}>
+              <Link className="navMenu-list-item" href={item.link}>
+                {item.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
 }

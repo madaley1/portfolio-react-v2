@@ -1,4 +1,9 @@
 #__next {
   display: flex;
   flex-flow: row nowrap;
+  > div {
+    width: 85vw;
+    height: auto;
+    margin-left: 15vw;
+  }
 }

@@ -110,7 +110,7 @@ video {
 
 body {
   font-family: "DroidSansMono", "SourceCodeMono", sans-serif;
-  background-color: rgb(10, 10, 10) !important;
+  background-color: rgb(42, 43, 43) !important;
   color: rgba(230, 230, 230, 0.9) !important;
   padding: 1em;
 }
@@ -125,22 +125,137 @@ a {
     color-scheme: dark;
   }
 }
+:root {
+  --random-number: 5s;
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+
+:root:has(.navMenu.green) {
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+
+:root:has(.navMenu.blue) {
+  --bright: rgb(0, 174, 255);
+  --reflection-bright: rgba(0, 204, 255, 0.5);
+  --dim: rgba(0, 174, 255, 0.1);
+  --reflection-dim: rgba(0, 204, 255, 0.05);
+}
+
+:root:has(.navMenu.purple) {
+  --bright: rgb(115, 0, 255);
+  --reflection-bright: rgba(115, 0, 255, 0.5);
+  --dim: rgba(115, 0, 255, 0.1);
+  --reflection-dim: rgba(115, 0, 255, 0.05);
+}
+
+:root:has(.navMenu.yellow) {
+  --bright: rgb(217, 255, 0);
+  --reflection-bright: rgba(217, 255, 0, 0.5);
+  --dim: rgba(217, 255, 0, 0.1);
+  --reflection-dim: rgba(217, 255, 0, 0.05);
+}
+
 .navMenu {
   width: 15vw;
   height: 100%;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
+  position: fixed;
+  justify-content: flex-start;
+  background-color: rgb(20, 20, 20);
+  box-shadow: inset -165px 84px 165px -190px var(--reflection-bright), -5px 0px 45px var(--bright);
+  animation: border-flicker var(--random-number) linear infinite;
+  top: 0;
+  left: 0;
+  padding-top: 2.5em;
+}
+.navMenu > a {
+  display: block;
+  margin: 1em 0 1em 1em;
 }
 .navMenu-list {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  margin: 0 0 0 1.5em;
+}
+.navMenu-list li {
+  text-decoration: none;
+  list-style: none;
+  width: 150px;
+  margin: 0.5em 0;
 }
 
+@keyframes border-flicker {
+  0%, 35%, 45%, 46.5%, 65%, 72%, 74%, 95% {
+    box-shadow: inset -165px 84px 165px -190px var(--reflection-dim), -5px 0px 45px var(--dim);
+  }
+  1%, 34%, 35.5%, 45.75%, 47%, 66%, 72.5%, 75%, 94%, 99% {
+    box-shadow: inset -165px 84px 165px -190px var(--reflection-bright), -5px 0px 45px var(--bright);
+  }
+}
 #__next {
   display: flex;
   flex-flow: row nowrap;
+}
+#__next > div {
+  width: 85vw;
+  height: auto;
+  margin-left: 15vw;
+}
+
+#index {
+  margin: auto;
+}
+#index #titleCard {
+  height: 95vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+#index #titleCard .namePlate {
+  margin: auto;
+  width: auto;
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  padding: 1em;
+  border: 2px solid black;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#index #titleCard .namePlate-image > img {
+  width: 20em;
+  height: auto;
+}
+#index #titleCard .namePlate-text {
+  height: auto;
+  display: block;
+  margin: auto 1em;
+  text-align: right;
+  border-right: 2px solid rgb(0, 0, 0);
+  padding-right: 1em;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+#index #titleCard .namePlate-text > * {
+  margin: 16px 0;
+}
+#index #titleCard .namePlate-text h1 {
+  font-size: 48px;
+}
+#index #titleCard .namePlate-text p {
+  font-size: 24px;
+}
+#index #titleCard .namePlate-text p:has(small) {
+  font-size: 16px;
 }
 
 /*# sourceMappingURL=main.css.map */

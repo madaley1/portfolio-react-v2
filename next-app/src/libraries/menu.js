@@ -14,10 +14,7 @@ module.exports = {
     const paths = files.map((file) => {
       if (file === '_app.tsx') return;
       if (file == 'index.tsx') {
-        return {
-          link: '',
-          name: 'Home'
-        };
+        return;
       } else {
         const link = path.parse(file).name;
         const capitalized = link.charAt(0).toUpperCase() + link.slice(1);
