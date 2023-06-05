@@ -20,10 +20,10 @@ module.exports = {
         const capitalized = link.charAt(0).toUpperCase() + link.slice(1);
         return {
           link: link,
-          name: capitalized
+          name: capitalized,
         };
       }
     });
     return paths;
-  }
+  },
 };

@@ -22,10 +22,10 @@ export default class NavMenu extends Component {
     navInfo: [
       {
         name: 'Home',
-        link: '/'
-      }
+        link: '/',
+      },
     ],
-    menuReturned: false
+    menuReturned: false,
   };
   constructor(props: any) {
     super(props);
@@ -65,22 +65,22 @@ export default class NavMenu extends Component {
         case '/' || '':
         default:
           this.setState({
-            classes: [...new Set([...this.state.classes, 'green'])]
+            classes: [...new Set([...this.state.classes, 'green'])],
           });
           break;
         case '/about' || '/about/':
           this.setState({
-            classes: [...new Set([...this.state.classes, 'yellow'])]
+            classes: [...new Set([...this.state.classes, 'yellow'])],
           });
           break;
         case '/projects' || '/projects/':
           this.setState({
-            classes: [...new Set([...this.state.classes, 'purple'])]
+            classes: [...new Set([...this.state.classes, 'purple'])],
           });
           break;
         case '/contact' || '/contact/':
           this.setState({
-            classes: [...new Set([this.state.classes, 'blue'])]
+            classes: [...new Set([this.state.classes, 'blue'])],
           });
           break;
       }
@@ -126,9 +126,9 @@ export default class NavMenu extends Component {
           navInfo: [
             {
               name: 'Home',
-              link: '/'
-            }
-          ]
+              link: '/',
+            },
+          ],
         });
       }
     }
@@ -140,9 +140,9 @@ export default class NavMenu extends Component {
     const classList = this.state.classes.join(' ');
     return (
       <nav className={classList} ref={this.navMenuRef}>
-        <a href="/">
+        <Link href="/">
           <Image src={logo} alt="Portfolio logo" width="150" />
-        </a>
+        </Link>
         <ul className="navMenu-list">
           <li>
             <Link className="navMenu-list-item" href="/">

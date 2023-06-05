@@ -31,7 +31,6 @@
       {
         "endOfLine": "lf",
         "singleQuote": true,
-        "trailingComma": "none",
         "block-closing-brace-newline-after": "always-multi-line",
         "block-closing-brace-empty-line-before": "never",
         "block-closing-brace-space-before": "always",
@@ -40,7 +39,14 @@
         "block-closing-brace-newline-before": "always-multi-line",
         "block-opening-brace-newline-after": "always-multi-line",
         "tabs": false,
-        "indent_size": 2
+        "indent_size": 2,
+        "comma-dangle": ["error", {
+          "arrays": "never",
+          "objects": "never",
+          "imports": "never",
+          "exports": "never",
+          "functions": "never"
+        }]
       }
     ],
     "no-console": "warn",
@@ -49,13 +55,13 @@
     "semi": 2,
     "no-extra-semi": 2,
     "quotes": [2, "single", "avoid-escape"],
-    // "indent": ["error", 2],
-    "comma-dangle": ["error", {
-      "arrays": "never",
-      "objects": "never",
-      "imports": "never",
-      "exports": "never",
-      "functions": "never"
+    "overrides": [{
+      "files": ["*.cjs"],
+      "rules":{
+        "@typescript-eslint/no-var-requires": 0
+      }
     }]
+    // "indent": ["error", 2],
+    
   }
 }
