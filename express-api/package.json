@@ -1,0 +1,15 @@
+{
+  "name": "express-api",
+  "version": "1.0.0",
+  "description": "express API for the Next.js Portfolio App",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
