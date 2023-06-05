@@ -63,7 +63,6 @@ export default class NavMenu extends Component {
     if (typeof window !== undefined) {
       switch (window.location.pathname) {
         case '/' || '':
-        default:
           this.setState({
             classes: [...new Set([...this.state.classes, 'green'])],
           });
@@ -83,6 +82,10 @@ export default class NavMenu extends Component {
             classes: [...new Set([this.state.classes, 'blue'])],
           });
           break;
+        default:
+          this.setState({
+            classes: [...new Set([...this.state.classes, 'red'])],
+          });
       }
     } else {
       this.setState({ classes: [...this.state.classes, 'green'] });

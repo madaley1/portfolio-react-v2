@@ -161,6 +161,13 @@ a {
   --reflection-dim: rgba(217, 255, 0, 0.05);
 }
 
+:root:has(.navMenu.red) {
+  --bright: rgb(255, 0, 0);
+  --reflection-bright: rgba(255, 0, 0, 0.5);
+  --dim: rgba(255, 0, 0, 0.1);
+  --reflection-dim: rgba(255, 0, 0, 0.05);
+}
+
 .navMenu {
   width: 15vw;
   height: 100%;
@@ -256,6 +263,26 @@ a {
 }
 #index #titleCard .namePlate-text p:has(small) {
   font-size: 16px;
+}
+
+#login > * {
+  margin: auto;
+}
+#login h1 {
+  width: max-content;
+}
+#login form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 25em;
+  margin-top: 1em;
+}
+#login form > label {
+  margin-top: 1em;
+}
+#login form > button {
+  margin-top: 2em;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,6 +1,6 @@
 {
   "name": "portfolio-react-v2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "The second iteration of a react portfolio, this time being truly full-stack via MERN, cleaning up the code (via DRY and other principles), and adding Typescript and SASS for readability and safety.",
   "scripts": {
@@ -30,6 +30,7 @@
     "eslint-config-next": "13.4.3",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
     "typescript": "^5.0.4"

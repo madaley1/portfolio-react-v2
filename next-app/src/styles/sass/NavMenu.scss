@@ -34,6 +34,13 @@
   --dim: rgba(217, 255, 0, 0.1);
   --reflection-dim: rgba(217, 255, 0, 0.05);
 }
+:root:has(.navMenu.red) {
+  --bright: rgb(255, 0, 0);
+  --reflection-bright: rgba(255, 0, 0, 0.5);
+
+  --dim: rgba(255, 0, 0, 0.1);
+  --reflection-dim: rgba(255, 0, 0, 0.05);
+}
 .navMenu {
   width: 15vw;
   height: 100%;
