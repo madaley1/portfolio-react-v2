@@ -5,6 +5,7 @@ const menu = require('./src/lib/menu.module.cjs');
 
 const nextConfig = (phase, { defaultConfig }) => {
   return {
+    pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
     env: {
       menu: menu.get('src/pages'),
     },

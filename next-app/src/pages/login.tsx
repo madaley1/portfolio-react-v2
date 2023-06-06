@@ -3,10 +3,10 @@ export default function Login() {
     <div id="login">
       <h1>The Login</h1>
       <form action="/api/login" method="get">
-        <label>username</label>
+        <label>Username</label>
         <input type="text" />
 
-        <label>password</label>
+        <label>Password</label>
         <input type="password" />
 
         <button type="submit">Login</button>

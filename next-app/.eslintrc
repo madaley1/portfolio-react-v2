@@ -55,13 +55,14 @@
     "semi": 2,
     "no-extra-semi": 2,
     "quotes": [2, "single", "avoid-escape"],
-    "overrides": [{
-      "files": ["*.cjs"],
-      "rules":{
-        "@typescript-eslint/no-var-requires": 0
-      }
-    }]
+    
     // "indent": ["error", 2],
     
-  }
+  },
+  "overrides": [{
+    "files": ["*.cjs", "*.js"],
+    "rules":{
+      "@typescript-eslint/no-var-requires": "off"
+    }
+  }]
 }
