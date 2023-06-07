@@ -58,37 +58,32 @@ export default class NavMenu extends Component {
 
     return []; // or handle parsing failure accordingly
   }
-
+  addToClasses(newClass: string) {
+    this.setState({
+      classes: [...new Set([...this.state.classes, newClass])],
+    });
+  }
   setFlickerSettings = (duration = 5) => {
     if (typeof window !== undefined) {
       switch (window.location.pathname) {
         case '/' || '':
-          this.setState({
-            classes: [...new Set([...this.state.classes, 'green'])],
-          });
+          this.addToClasses('green');
           break;
         case '/about' || '/about/':
-          this.setState({
-            classes: [...new Set([...this.state.classes, 'yellow'])],
-          });
+          this.addToClasses('yellow');
           break;
         case '/projects' || '/projects/':
-          this.setState({
-            classes: [...new Set([...this.state.classes, 'purple'])],
-          });
+          this.addToClasses('purple');
           break;
         case '/contact' || '/contact/':
-          this.setState({
-            classes: [...new Set([this.state.classes, 'blue'])],
-          });
+          this.addToClasses('blue');
           break;
         default:
-          this.setState({
-            classes: [...new Set([...this.state.classes, 'red'])],
-          });
+          this.addToClasses('red');
+          break;
       }
     } else {
-      this.setState({ classes: [...this.state.classes, 'green'] });
+      this.addToClasses('green');
     }
 
     // find diff
