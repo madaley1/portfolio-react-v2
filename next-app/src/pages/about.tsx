@@ -9,12 +9,11 @@ export default class About extends Component {
   };
   constructor(props: any) {
     super(props);
-    this.loggedIn = false;
-    if (!process.env.NEXT_PUBLIC_ADMIN_KEY) return;
     this.getAboutContent().then((data) => {
       if (!data) return;
       this.setState({ content: JSON.parse(data).rows });
     });
+    this.loggedIn = false;
   }
 
   getAboutContent(): Promise<string | undefined> {
@@ -43,6 +42,7 @@ export default class About extends Component {
   }
 
   componentDidMount() {
+    if (!process.env.NEXT_PUBLIC_ADMIN_KEY) return;
     if (
       sessionStorage.getItem('admin') &&
       sessionStorage.getItem('admin') === process.env.NEXT_PUBLIC_ADMIN_KEY
