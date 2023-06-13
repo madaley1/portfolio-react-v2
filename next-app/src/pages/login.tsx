@@ -7,9 +7,6 @@ import * as crypto from 'crypto';
 //component imports
 import { Formik, Form, Field } from 'formik';
 
-//vercel imports
-import { createPool } from '@vercel/postgres';
-
 export default class Login extends Component {
   submitRef: React.RefObject<HTMLButtonElement>;
   userRef: React.RefObject<HTMLInputElement>;
