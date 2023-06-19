@@ -12,7 +12,7 @@ module.exports = {
     });
 
     const paths = files.map((file) => {
-      if (file === '_app.tsx' || file==='login.tsx') return;
+      if (file === '_app.tsx' || file === 'login.tsx') return;
       if (file == 'index.tsx') {
         return;
       } else {

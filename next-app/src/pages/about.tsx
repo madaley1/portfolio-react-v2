@@ -1,6 +1,9 @@
 // React Imports
 import React, { Component, createRef } from 'react';
 
+//component imports
+import { Formik, Form, Field } from 'formik';
+
 export default class About extends Component {
   loggedIn: boolean;
 
@@ -51,18 +54,34 @@ export default class About extends Component {
     }
   }
 
+  globalAboutEditButton() {
+    if (!this.loggedIn) return;
+    return <button id="global-about-edit">Edit About</button>;
+  }
+
+  editAboutCardButton(index: number) {
+    if (!this.loggedIn) return;
+    return <button id={`about-card-${index}-edit`}>Edit</button>;
+  }
+
   render() {
     return (
-      <div>
-        {this.state.content.map((key: Record<string, any>, index: number) => {
-          return (
-            <div className="about-section-card" key={index}>
-              <h2>{key.about_section}</h2>
-              <p>{key.about_text}</p>
-            </div>
-          );
-        })}
-      </div>
+      <>
+        <div>
+          {this.globalAboutEditButton()}
+          {this.state.content.map((key: Record<string, any>, index: number) => {
+            return (
+              <div className="about-section-card" key={index}>
+                <h2>{key.about_section}</h2>
+                <p>{key.about_text}</p>
+                {this.editAboutCardButton(index)}
+              </div>
+            );
+          })}
+        </div>
+        <div id="global-edit-modal"></div>
+        <div id="specific-edit-modal"></div>
+      </>
     );
   }
 }
