@@ -1,21 +1,49 @@
 import React, { Component, createRef } from 'react';
 
-interface Props = {
-  title: string;
-  buttons?: Record<string, string>[];
+export type ButtonComponent = {
+  id: string;
+  text: string;
+  type: 'button' | 'link';
+  onClick?: () => void;
+  href?: string;
 };
-export default class Modal extends Component {
+
+type Props = {
+  title: string;
+  buttons?: ButtonComponent[];
+  children: React.ReactNode | React.ReactNode[];
+};
+
+class ButtonContainer extends Component<ButtonComponent> {}
+
+export default class Modal extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
 
+  compileButtons() {
+    const { buttons } = this.props;
+    if (!buttons) return;
+    return buttons.map((button, key) => {
+      return (
+        <button id={button.id} key={key} onClick={button.onClick}>
+          {button.text}
+        </button>
+      );
+    });
+  }
+
   render() {
-    const { title } = this.props;
+    const { title, children } = this.props;
     return (
-      <div className="modal">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4>{this.props.title}</h4>
+      <div className="modalContainer">
+        <div className="modal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4>{title}</h4>
+            </div>
+            <div className="modal-body">{children}</div>
+            <div className="modal-footer">{this.compileButtons()}</div>
           </div>
         </div>
       </div>

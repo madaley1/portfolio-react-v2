@@ -1,8 +1,12 @@
 // React Imports
 import React, { Component, createRef } from 'react';
 
-//component imports
+// component imports
 import { Formik, Form, Field } from 'formik';
+import Modal from '@/Components/Modal';
+
+// type components
+import type { ButtonComponent } from '@/Components/Modal';
 
 export default class About extends Component {
   loggedIn: boolean;
@@ -59,9 +63,45 @@ export default class About extends Component {
     return <button id="global-about-edit">Edit About</button>;
   }
 
-  editAboutCardButton(index: number) {
+  editAboutCardButton(index: number, textObject: Record<string, any>) {
     if (!this.loggedIn) return;
-    return <button id={`about-card-${index}-edit`}>Edit</button>;
+    const defaultModalButtons: ButtonComponent[] = [
+      {
+        id: `about-card-${index}-edit-submit`,
+        text: 'Submit',
+        type: 'button',
+      },
+      {
+        id: `about-card-${index}-edit-cancel`,
+        text: 'Cancel',
+        type: 'button',
+      },
+    ];
+    return (
+      <>
+        <button id={`about-card-${index}-edit`}>Edit</button>
+        <Modal title={`Edit About Card ${index}`} buttons={defaultModalButtons}>
+          <Formik
+            key={index}
+            initialValues={{
+              title: textObject.about_section,
+              text: textObject.about_text,
+            }}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            <Form>
+              <label>Title</label>
+              <Field id={`about-card-${index}-edit-title`} name="title" />
+
+              <label>Text</label>
+              <Field id={`about-card-${index}-edit-text`} name="text" />
+            </Form>
+          </Formik>
+        </Modal>
+      </>
+    );
   }
 
   render() {
@@ -74,7 +114,7 @@ export default class About extends Component {
               <div className="about-section-card" key={index}>
                 <h2>{key.about_section}</h2>
                 <p>{key.about_text}</p>
-                {this.editAboutCardButton(index)}
+                {this.editAboutCardButton(index, key)}
               </div>
             );
           })}
