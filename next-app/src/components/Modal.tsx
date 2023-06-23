@@ -4,21 +4,29 @@ export type ButtonComponent = {
   id: string;
   text: string;
   type: 'button' | 'link';
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   href?: string;
 };
 
 type Props = {
+  id?: string;
   title: string;
   buttons?: ButtonComponent[];
   children: React.ReactNode | React.ReactNode[];
 };
 
-class ButtonContainer extends Component<ButtonComponent> {}
+export function closeModal(e: React.MouseEvent<HTMLElement>) {
+  e.preventDefault();
+  document.querySelectorAll('.modal.open').forEach((modal) => {
+    modal.classList.remove('open');
+  });
+}
 
 export default class Modal extends Component<Props> {
+  modalRef: React.RefObject<HTMLDivElement>;
   constructor(props: Props) {
     super(props);
+    this.modalRef = createRef();
   }
 
   compileButtons() {
@@ -34,10 +42,10 @@ export default class Modal extends Component<Props> {
   }
 
   render() {
-    const { title, children } = this.props;
+    const { title, children, id } = this.props;
     return (
-      <div className="modalContainer">
-        <div className="modal">
+      <div className="modalContainer" onClick={closeModal}>
+        <div className="modal" id={id} ref={this.modalRef}>
           <div className="modal-content">
             <div className="modal-header">
               <h4>{title}</h4>

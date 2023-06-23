@@ -213,20 +213,31 @@ a {
   position: absolute;
   top: 0;
   left: 0;
+  background-color: rgba(151, 151, 151, 0.2196078431);
   display: none;
 }
 .modalContainer:has(.modal.open) {
   display: block;
 }
 .modalContainer .modal {
-  display: none;
   max-height: 50vh;
+  min-height: 15em;
   max-width: 50vw;
   min-width: 25em;
   margin: 10em auto 0 auto;
+  background: #18281a;
+  padding: 2em 2em;
+  border-radius: 15px;
 }
 .modalContainer .modal.open {
   display: block;
+}
+.modalContainer .modal-header {
+  margin-bottom: 1em;
+}
+.modalContainer .modal-header h4 {
+  font-weight: 500;
+  font-size: 16pt;
 }
 .modalContainer .modal-content {
   display: flex;
@@ -238,6 +249,9 @@ a {
 .modalContainer .modal-body form {
   display: flex;
   flex-flow: column nowrap;
+}
+.modalContainer .modal-body form textarea {
+  min-height: 7.5em;
 }
 .modalContainer .modal-footer {
   display: flex;

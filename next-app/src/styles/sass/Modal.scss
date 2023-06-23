@@ -4,18 +4,30 @@
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #97979738;
   display: none;
+
   &:has(.modal.open) {
     display: block;
   }
   .modal {
-    display: none;
     max-height: 50vh;
+    min-height: 15em;
     max-width: 50vw;
     min-width: 25em;
     margin: 10em auto 0 auto;
+    background: #18281a;
+    padding: 2em 2em;
+    border-radius: 15px;
     &.open {
       display: block;
+    }
+    &-header {
+      h4 {
+        font-weight: 500;
+        font-size: 16pt;
+      }
+      margin-bottom: 1em;
     }
 
     &-content {
@@ -30,6 +42,9 @@
       form {
         display: flex;
         flex-flow: column nowrap;
+        textarea {
+          min-height: 7.5em;
+        }
       }
     }
 
