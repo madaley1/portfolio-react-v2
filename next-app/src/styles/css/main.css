@@ -215,11 +215,13 @@ a {
   left: 0;
   background-color: rgba(151, 151, 151, 0.2196078431);
   display: none;
+  z-index: 1;
 }
 .modalContainer:has(.modal.open) {
   display: block;
 }
 .modalContainer .modal {
+  z-index: 2;
   max-height: 50vh;
   min-height: 15em;
   max-width: 50vw;

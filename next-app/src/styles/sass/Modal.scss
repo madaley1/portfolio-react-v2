@@ -6,11 +6,12 @@
   left: 0;
   background-color: #97979738;
   display: none;
-
+  z-index: 1;
   &:has(.modal.open) {
     display: block;
   }
   .modal {
+    z-index: 2;
     max-height: 50vh;
     min-height: 15em;
     max-width: 50vw;

@@ -17,6 +17,8 @@ type Props = {
 
 export function closeModal(e: React.MouseEvent<HTMLElement>) {
   e.preventDefault();
+  if (!(e.target instanceof HTMLElement)) return;
+  if (e.target.matches('.modal') || e.target.matches('.modal *')) return;
   document.querySelectorAll('.modal.open').forEach((modal) => {
     modal.classList.remove('open');
   });

@@ -1,12 +1,16 @@
 // React Imports
 import React, { Component, createRef } from 'react';
 
+// Next Imports
+import Router from 'next/router';
+
 // component imports
 import { Formik, Form, Field } from 'formik';
 import Modal, { closeModal } from '@/Components/Modal';
 
 // type imports
 import type { ButtonComponent } from '@/Components/Modal';
+import type { FormikProps } from 'formik';
 
 // new interfaces
 interface EditAboutCardProps {
@@ -17,6 +21,7 @@ interface EditAboutCardProps {
 
 interface EditAboutCardState {
   modalRef: React.RefObject<Modal> | null;
+  formRef: React.RefObject<FormikProps<any>> | null;
 }
 
 // new Types
@@ -34,8 +39,10 @@ class EditAboutCardButton extends Component<
   defaultModalButtons: ButtonComponent[];
   state: EditAboutCardState = {
     modalRef: null,
+    formRef: null,
   };
-  modalCreateRef: React.RefObject<Modal> | null;
+  modalCreateRef: React.RefObject<Modal> | null = createRef();
+  formCreateRef: React.RefObject<FormikProps<any>> | null = createRef();
   constructor(props: editAboutCardProps) {
     super(props);
     this.defaultModalButtons = [
@@ -43,6 +50,7 @@ class EditAboutCardButton extends Component<
         id: `about-card-${props.index}-edit-submit`,
         text: 'Submit',
         type: 'button',
+        onClick: this.submitModalHandler.bind(this),
       },
       {
         id: `about-card-${props.index}-edit-cancel`,
@@ -53,13 +61,59 @@ class EditAboutCardButton extends Component<
     ];
     this.setState({
       modalRef: null,
+      formRef: null,
     });
-    this.modalCreateRef = createRef();
+  }
+
+  submitModal(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    if (!this.state.formRef) return;
+    const { current } = this.state.formRef;
+    if (!current) return;
+    const { title, text } = current.values;
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `/api/about?id=${
+        this.props.index + 1
+      }&title=${title}&text=${text}`;
+      xhr.open('POST', url);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log(xhr.response);
+          resolve({
+            about_section: title,
+            about_text: text,
+          });
+        } else {
+          reject({
+            status: xhr.status,
+            statusText: xhr.statusText,
+          });
+        }
+      };
+      xhr.onerror = function () {
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText,
+        });
+      };
+      xhr.send();
+    });
+  }
+
+  submitModalHandler(e: React.MouseEvent<HTMLElement>) {
+    if (!this || !this.submitModal) return console.error('Error');
+
+    (this.submitModal as (e: React.MouseEvent<HTMLElement>) => Promise<any>)(
+      e
+    ).then((data) => {
+      if (!data) return;
+      Router.reload();
+    });
   }
 
   showCardModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(this.state.modalRef);
     if (!this.state.modalRef) return;
     const firstLayer = this.state.modalRef.current;
     if (!firstLayer || !firstLayer.modalRef.current) return;
@@ -68,7 +122,10 @@ class EditAboutCardButton extends Component<
   };
 
   componentDidMount() {
-    this.setState({ modalRef: this.modalCreateRef });
+    this.setState({
+      modalRef: this.modalCreateRef,
+      formRef: this.formCreateRef,
+    });
   }
   render() {
     if (!this.props.loggedIn) return;
@@ -87,6 +144,7 @@ class EditAboutCardButton extends Component<
           ref={this.modalCreateRef}
         >
           <Formik
+            innerRef={this.formCreateRef}
             key={this.props.index}
             initialValues={{
               title: this.props.textObject.about_section,
@@ -205,7 +263,6 @@ export default class About extends Component {
           })}
         </div>
         <div id="global-edit-modal"></div>
-        <div id="specific-edit-modal"></div>
       </>
     );
   }
