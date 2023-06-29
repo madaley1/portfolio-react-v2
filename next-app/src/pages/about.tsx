@@ -1,3 +1,6 @@
+// Node imports
+import axios from 'axios';
+
 // React Imports
 import React, { Component, createRef } from 'react';
 
@@ -65,21 +68,57 @@ class EditAboutCardButton extends Component<
     });
   }
 
+  addNewSection(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    if (!this.state.formRef) return;
+    const { current } = this.state.formRef;
+    if (!current) return;
+    const { title, text } = current.values;
+
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `/api/about?title=${title}&text=${text}`;
+      xhr.open('POST', url);
+      xhr.onload = function () {
+        try {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve({
+              about_section: title,
+              about_text: text,
+            });
+          }
+        } catch {
+          reject({
+            status: xhr.status,
+            statusText: xhr.statusText,
+          });
+        }
+      };
+      xhr.onerror = function () {
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText,
+        });
+      };
+      xhr.send();
+    });
+  }
+
   submitModal(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     if (!this.state.formRef) return;
     const { current } = this.state.formRef;
     if (!current) return;
     const { title, text } = current.values;
+
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const url = `/api/about?id=${
         this.props.index + 1
       }&title=${title}&text=${text}`;
-      xhr.open('POST', url);
+      xhr.open('PATCH', url);
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-          console.log(xhr.response);
           resolve({
             about_section: title,
             about_text: text,
@@ -104,12 +143,14 @@ class EditAboutCardButton extends Component<
   submitModalHandler(e: React.MouseEvent<HTMLElement>) {
     if (!this || !this.submitModal) return console.error('Error');
 
-    (this.submitModal as (e: React.MouseEvent<HTMLElement>) => Promise<any>)(
-      e
-    ).then((data) => {
-      if (!data) return;
-      Router.reload();
-    });
+    (this.submitModal as (e: React.MouseEvent<HTMLElement>) => Promise<any>)(e)
+      .then((data) => {
+        if (!data) return;
+        Router.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   showCardModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -183,35 +224,27 @@ export default class About extends Component {
   };
   constructor(props: any) {
     super(props);
-    this.getAboutContent().then((data) => {
-      if (!data) return;
-      this.setState({ content: JSON.parse(data).rows });
-    });
+    this.getAboutContent()
+      .then((data) => {
+        if (!data) return;
+        this.setState({ content: data.rows });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     this.loggedIn = false;
   }
 
-  getAboutContent(): Promise<string | undefined> {
+  getAboutContent(): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', '/api/about', true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function () {
-        if (this.status >= 200 && this.status < 300) {
-          resolve(xhr.response);
-        } else {
-          reject({
-            status: this.status,
-            statusText: xhr.statusText,
-          });
-        }
-      };
-      xhr.onerror = function () {
-        reject({
-          status: this.status,
-          statusText: xhr.statusText,
+      axios
+        .get('/api/about')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          reject(err.response);
         });
-      };
-      xhr.send();
     });
   }
 
@@ -257,7 +290,6 @@ export default class About extends Component {
                   textObject={key}
                   loggedIn={this.loggedIn}
                 />
-                {/* {this.editAboutCardButton(index, key)} */}
               </div>
             );
           })}
