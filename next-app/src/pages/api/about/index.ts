@@ -9,11 +9,11 @@ export default async function handler(req: any, res: any) {
   try {
     if (req.method === 'GET') {
       const { rows } = await client.query('SELECT * FROM about');
-      console.log(rows);
       res.status(200).json({ rows });
     } else if (req.method === 'POST') {
+      console.log(req.method);
       const { title, text } = req.query;
-      const query = `INSERT INTO 'about' (about_section, about_text) VALUES('${title}', '${text}')`;
+      const query = `INSERT INTO about (about_section, about_text) VALUES('${title}', '${text}')`;
       const { rows } = await client.query(query);
       res.status(200).json(rows);
     } else if (req.method === 'PATCH') {
@@ -38,6 +38,7 @@ export default async function handler(req: any, res: any) {
     }
   } catch (e) {
     if (!(e instanceof Error)) return;
+
     res.status(500).json({ error: e.message });
   }
 }
