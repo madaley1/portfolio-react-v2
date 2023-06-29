@@ -60,7 +60,6 @@ export default class Login extends Component {
       const loginRequest = await this.submitLoginRequest(email, password);
       if (!loginRequest) throw new Error('Login Failed');
       const loginRequestValidated = JSON.parse(loginRequest as string);
-      console.log(loginRequestValidated.login);
       if (loginRequestValidated.login === true) {
         if (!process.env.NEXT_PUBLIC_ADMIN_KEY) {
           alert('An Error has occured, please try again later.');

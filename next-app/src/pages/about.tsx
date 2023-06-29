@@ -62,10 +62,6 @@ class EditAboutCardButton extends Component<
         onClick: closeModal,
       },
     ];
-    this.setState({
-      modalRef: null,
-      formRef: null,
-    });
   }
 
   addNewSection(e: React.MouseEvent<HTMLElement>) {

@@ -11,7 +11,6 @@ export default async function handler(req: any, res: any) {
       const { rows } = await client.query('SELECT * FROM about');
       res.status(200).json({ rows });
     } else if (req.method === 'POST') {
-      console.log(req.method);
       const { title, text } = req.query;
       const query = `INSERT INTO about (about_section, about_text) VALUES('${title}', '${text}')`;
       const { rows } = await client.query(query);
