@@ -9,46 +9,31 @@ import { Formik, Form, Field } from 'formik';
 import Modal, { closeModal } from '@/Components/Modal';
 
 // type imports
-import type { ButtonComponent } from '@/Components/Modal';
+import type { ButtonComponent } from '@/types/about/modalForm';
 import type { FormikProps } from 'formik';
+import type { editModalFormProps } from '@/types/about/modalForm';
 
-// new interfaces
-interface EditAboutCardProps {
-  index: number;
-  textObject: Record<string, any>;
-  loggedIn: boolean;
-}
-
-interface EditAboutCardState {
-  modalRef: React.RefObject<Modal> | null;
-  formRef: React.RefObject<FormikProps<any>> | null;
-}
-
-// new Types
-type editAboutCardProps = {
-  index: number;
-  textObject: Record<string, any>;
-  loggedIn: boolean;
-};
+// interface imports
+import { EditModalFormProps, ModalFormState } from '@/types/about/modalForm';
 
 //classes
 export default class EditAboutCardButton extends Component<
-  EditAboutCardProps,
-  EditAboutCardState
+  EditModalFormProps,
+  ModalFormState
 > {
   defaultModalButtons: ButtonComponent[];
-  state: EditAboutCardState = {
+  state: ModalFormState = {
     modalRef: null,
     formRef: null,
   };
   modalCreateRef: React.RefObject<Modal> | null = createRef();
   formCreateRef: React.RefObject<FormikProps<any>> | null = createRef();
-  constructor(props: editAboutCardProps) {
+  constructor(props: editModalFormProps) {
     super(props);
     this.defaultModalButtons = [
       {
         id: `about-card-${props.index}-edit-submit`,
-        text: 'Submit',
+        text: 'Submit Edit',
         type: 'button',
         onClick: this.submitModalHandler.bind(this),
       },
@@ -59,42 +44,6 @@ export default class EditAboutCardButton extends Component<
         onClick: closeModal,
       },
     ];
-  }
-
-  addNewSection(e: React.MouseEvent<HTMLElement>) {
-    e.preventDefault();
-    if (!this.state.formRef) return;
-    const { current } = this.state.formRef;
-    if (!current) return;
-    const { title, text } = current.values;
-
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      const url = `/api/about?title=${title}&text=${text}`;
-      xhr.open('POST', url);
-      xhr.onload = function () {
-        try {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve({
-              about_section: title,
-              about_text: text,
-            });
-          }
-        } catch {
-          reject({
-            status: xhr.status,
-            statusText: xhr.statusText,
-          });
-        }
-      };
-      xhr.onerror = function () {
-        reject({
-          status: xhr.status,
-          statusText: xhr.statusText,
-        });
-      };
-      xhr.send();
-    });
   }
 
   submitModal(e: React.MouseEvent<HTMLElement>) {

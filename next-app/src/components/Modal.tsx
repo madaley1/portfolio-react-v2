@@ -1,12 +1,6 @@
 import React, { Component, createRef } from 'react';
 
-export type ButtonComponent = {
-  id: string;
-  text: string;
-  type: 'button' | 'link';
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  href?: string;
-};
+import type { ButtonComponent } from '@/types/about/modalForm';
 
 type Props = {
   id?: string;

@@ -8,6 +8,7 @@
       "@/Components/*": ["src/components/*"],
       "@/Pages/*": ["src/pages/*"],
       "@/Styles/*": ["src/styles/*"],
+      "@/Types/*": ["src/types/*"],
     },
   }
 }

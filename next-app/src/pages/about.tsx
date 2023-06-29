@@ -5,7 +5,8 @@ import axios from 'axios';
 import React, { Component, createRef } from 'react';
 
 // component imports
-import EditAboutCardButton from '@/components/EditAboutCardButton';
+import EditAboutCardButton from '@/components/about/EditAboutCardButton';
+import AddAboutSectionButton from '@/components/about/AddAboutSectionButton';
 
 //classes
 export default class About extends Component {
@@ -85,8 +86,8 @@ export default class About extends Component {
               </div>
             );
           })}
+          <AddAboutSectionButton loggedIn={this.loggedIn} />
         </div>
-        <div id="global-edit-modal"></div>
       </>
     );
   }
