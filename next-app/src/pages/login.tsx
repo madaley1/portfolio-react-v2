@@ -1,9 +1,6 @@
 // React Imports
 import React, { Component, createRef } from 'react';
 
-//Crypto Hashing Import
-import * as crypto from 'crypto';
-
 //component imports
 import { Formik, Form, Field } from 'formik';
 
