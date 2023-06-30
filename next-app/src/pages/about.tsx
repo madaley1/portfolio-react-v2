@@ -5,8 +5,8 @@ import axios from 'axios';
 import React, { Component, createRef } from 'react';
 
 // component imports
-import EditAboutCardButton from '@/components/about/EditAboutCardButton';
-import AddAboutSectionButton from '@/components/about/AddAboutSectionButton';
+import EditAboutCard from '@/components/about/EditAboutCard';
+import AddAboutSection from '@/components/about/AddAboutSection';
 
 //classes
 export default class About extends Component {
@@ -33,6 +33,7 @@ export default class About extends Component {
       axios
         .get('/api/about')
         .then((response) => {
+          console.log(response.data);
           resolve(response.data);
         })
         .catch((err) => {
@@ -78,15 +79,15 @@ export default class About extends Component {
               <div className="about-section-card" key={index}>
                 <h2>{key.about_section}</h2>
                 <p>{key.about_text}</p>
-                <EditAboutCardButton
-                  index={index}
+                <EditAboutCard
+                  index={key.id}
                   textObject={key}
                   loggedIn={this.loggedIn}
                 />
               </div>
             );
           })}
-          <AddAboutSectionButton loggedIn={this.loggedIn} />
+          <AddAboutSection loggedIn={this.loggedIn} />
         </div>
       </>
     );

@@ -17,7 +17,7 @@ import type { editModalFormProps } from '@/types/about/modalForm';
 import { EditModalFormProps, ModalFormState } from '@/types/about/modalForm';
 
 //classes
-export default class EditAboutCardButton extends Component<
+export default class EditAboutCard extends Component<
   EditModalFormProps,
   ModalFormState
 > {
@@ -43,6 +43,12 @@ export default class EditAboutCardButton extends Component<
         type: 'button',
         onClick: closeModal,
       },
+      {
+        id: `about-card-${props.index}-edit-delete`,
+        text: 'Delete',
+        type: 'button',
+        onClick: this.deleteModalHandler.bind(this),
+      },
     ];
   }
 
@@ -55,9 +61,7 @@ export default class EditAboutCardButton extends Component<
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = `/api/about?id=${
-        this.props.index + 1
-      }&title=${title}&text=${text}`;
+      const url = `/api/about?id=${this.props.index}&title=${title}&text=${text}`;
       xhr.open('PATCH', url);
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
@@ -86,6 +90,48 @@ export default class EditAboutCardButton extends Component<
     if (!this || !this.submitModal) return console.error('Error');
 
     (this.submitModal as (e: React.MouseEvent<HTMLElement>) => Promise<any>)(e)
+      .then((data) => {
+        if (!data) return;
+        Router.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  deleteCard(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const { index } = this.props;
+      const url = `/api/about?id=${index}`;
+      xhr.open('DELETE', url);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve({
+            id: index,
+          });
+        } else {
+          reject({
+            status: xhr.status,
+            statusText: xhr.statusText,
+          });
+        }
+      };
+      xhr.onerror = function () {
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText,
+        });
+      };
+      xhr.send();
+    });
+  }
+
+  deleteModalHandler(e: React.MouseEvent<HTMLElement>) {
+    if (!this || !this.submitModal) return console.error('Error');
+
+    (this.deleteCard as (e: React.MouseEvent<HTMLElement>) => Promise<any>)(e)
       .then((data) => {
         if (!data) return;
         Router.reload();

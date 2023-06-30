@@ -21,19 +21,21 @@ export default async function handler(req: any, res: any) {
         res.status(400).json({ error: 'id is required' });
       } else if (!title) {
         const query = `UPDATE about SET about_text = '${text}' WHERE id = ${id};`;
-        const { rows } = await client.query(query);
+        await client.query(query);
         res.status(200).json({ message: 'updated' });
       } else if (!text) {
         const query = `UPDATE about SET about_section = '${title}' WHERE id = ${id};`;
-        const { rows } = await client.query(query);
+        await client.query(query);
         res.status(200).json({ message: 'updated' });
       } else {
         const query = `UPDATE about SET about_section = '${title}', about_text = '${text}' WHERE id = ${id};`;
-        const { rows } = await client.query(query);
+        await client.query(query);
         res.status(200).json({ message: 'updated' });
       }
     } else if (req.method === 'DELETE') {
-      const { rows } = await client.query('SELECT * FROM about');
+      const query = `DELETE FROM about WHERE id = ${req.query.id}`;
+      await client.query(query);
+      res.status(200).json({ message: 'deleted' });
     }
   } catch (e) {
     if (!(e instanceof Error)) return;

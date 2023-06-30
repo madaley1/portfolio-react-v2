@@ -16,7 +16,7 @@ import { AddModalFormProps, ModalFormState } from '@/types/about/modalForm';
 import type { ButtonComponent } from '@/types/about/modalForm';
 import type { addModalFormProps } from '@/types/about/modalForm';
 
-export default class AddAboutSectionButton extends Component<
+export default class AddAboutSection extends Component<
   AddModalFormProps,
   ModalFormState
 > {
