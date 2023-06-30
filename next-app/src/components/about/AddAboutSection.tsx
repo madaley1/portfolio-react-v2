@@ -55,6 +55,10 @@ export default class AddAboutSection extends Component<
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const url = `/api/about?title=${title}&text=${text}`;
+      const data = JSON.stringify({
+        title,
+        text,
+      });
       xhr.open('POST', url);
       xhr.onload = function () {
         try {
@@ -77,7 +81,7 @@ export default class AddAboutSection extends Component<
           statusText: xhr.statusText,
         });
       };
-      xhr.send();
+      xhr.send(encodeURIComponent(data));
     });
   }
 

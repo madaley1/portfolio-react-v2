@@ -9,10 +9,14 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export function closeModal(e: React.MouseEvent<HTMLElement>) {
+export function closeModal(
+  e: React.MouseEvent<HTMLElement>,
+  intendedTarget?: string
+) {
   e.preventDefault();
+  console.log(e.target);
   if (!(e.target instanceof HTMLElement)) return;
-  if (e.target.matches('.modal') || e.target.matches('.modal *')) return;
+  if (intendedTarget && !e.target.matches(intendedTarget)) return;
   document.querySelectorAll('.modal.open').forEach((modal) => {
     modal.classList.remove('open');
   });
@@ -40,7 +44,12 @@ export default class Modal extends Component<Props> {
   render() {
     const { title, children, id } = this.props;
     return (
-      <div className="modalContainer" onClick={closeModal}>
+      <div
+        className="modalContainer"
+        onClick={(event) => {
+          closeModal(event, '.modalContainer');
+        }}
+      >
         <div className="modal" id={id} ref={this.modalRef}>
           <div className="modal-content">
             <div className="modal-header">

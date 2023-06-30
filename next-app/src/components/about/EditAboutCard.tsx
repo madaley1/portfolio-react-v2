@@ -58,10 +58,15 @@ export default class EditAboutCard extends Component<
     const { current } = this.state.formRef;
     if (!current) return;
     const { title, text } = current.values;
-
+    console.log(text);
+    const data = JSON.stringify({
+      id: this.props.index,
+      title: title,
+      text: text,
+    });
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = `/api/about?id=${this.props.index}&title=${title}&text=${text}`;
+      const url = '/api/about';
       xhr.open('PATCH', url);
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
@@ -82,7 +87,7 @@ export default class EditAboutCard extends Component<
           statusText: xhr.statusText,
         });
       };
-      xhr.send();
+      xhr.send(encodeURIComponent(data));
     });
   }
 
@@ -177,7 +182,7 @@ export default class EditAboutCard extends Component<
             key={this.props.index}
             initialValues={{
               title: this.props.textObject.about_section,
-              text: this.props.textObject.about_text,
+              text: decodeURI(this.props.textObject.about_text),
             }}
             onSubmit={(values) => {
               console.log(values);

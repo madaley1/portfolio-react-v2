@@ -78,7 +78,7 @@ export default class About extends Component {
             return (
               <div className="about-section-card" key={index}>
                 <h2>{key.about_section}</h2>
-                <p>{key.about_text}</p>
+                <p>{decodeURI(key.about_text)}</p>
                 <EditAboutCard
                   index={key.id}
                   textObject={key}
