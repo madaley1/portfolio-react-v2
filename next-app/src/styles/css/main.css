@@ -115,6 +115,10 @@ body {
   padding: 1em;
 }
 
+p {
+  white-space: pre-wrap;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -268,6 +272,26 @@ button {
   margin: 1em;
 }
 
+#login > * {
+  margin: auto;
+}
+#login h1 {
+  width: max-content;
+}
+#login form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 25em;
+  margin-top: 1em;
+}
+#login form > label {
+  margin-top: 1em;
+}
+#login form > button {
+  margin-top: 2em;
+}
+
 #__next {
   display: flex;
   flex-flow: row nowrap;
@@ -276,6 +300,7 @@ button {
   width: 85vw;
   height: auto;
   margin-left: 15vw;
+  padding: 0 2em;
 }
 
 #index {
@@ -326,24 +351,20 @@ button {
   font-size: 16px;
 }
 
-#login > * {
-  margin: auto;
+.about-section-card {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  background: rgb(43, 43, 40);
 }
-#login h1 {
-  width: max-content;
+.about-section-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
-#login form {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  width: 25em;
-  margin-top: 1em;
-}
-#login form > label {
-  margin-top: 1em;
-}
-#login form > button {
-  margin-top: 2em;
+.about-section-card p {
+  padding-left: 0.5rem;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -3,10 +3,11 @@
 
 //Component imports
 @import "App.scss";
-@import "NavMenu.scss";
-@import "Modal.scss";
+@import "./components/NavMenu.scss";
+@import "./components/Modal.scss";
+@import "./components/Login.scss";
 
 //page imports
-@import "page.scss";
-@import "index.scss";
-@import "login.scss";
+@import "./pages/page.scss";
+@import "./pages/index.scss";
+@import "./pages/about.scss";

@@ -53,6 +53,7 @@ export default class About extends Component {
   }
 
   globalAboutEditButton() {
+    // this hasn't been fully implemented yet, it will allow for re-ordering of the about sections
     if (!this.loggedIn) return;
     return <button id="global-about-edit">Edit About</button>;
   }
@@ -73,7 +74,7 @@ export default class About extends Component {
     return (
       <>
         <div>
-          {this.globalAboutEditButton()}
+          {/* {this.globalAboutEditButton()} */}
           {this.state.content.map((key: Record<string, any>, index: number) => {
             return (
               <div className="about-section-card" key={index}>
