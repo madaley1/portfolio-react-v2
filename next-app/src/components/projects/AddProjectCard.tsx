@@ -16,13 +16,20 @@ import { AddModalFormProps, ModalFormState } from '@/types/about/modalForm';
 import type { ButtonComponent } from '@/types/about/modalForm';
 import type { addModalFormProps } from '@/types/about/modalForm';
 
-export default class AddAboutSection extends Component<
+interface ProjectModalFormState extends ModalFormState {
+  fields: number;
+  slideJSX: JSX.Element[];
+}
+
+export default class AddprojectSection extends Component<
   AddModalFormProps,
-  ModalFormState
+  ProjectModalFormState
 > {
-  state: ModalFormState = {
+  state: ProjectModalFormState = {
     modalRef: null,
     formRef: null,
+    fields: 0,
+    slideJSX: [],
   };
   defaultModalButtons: ButtonComponent[];
   modalCreateRef: React.RefObject<Modal> | null = createRef();
@@ -31,13 +38,13 @@ export default class AddAboutSection extends Component<
     super(props);
     this.defaultModalButtons = [
       {
-        id: 'about-card-add-submit',
+        id: 'project-card-add-submit',
         text: 'Add Section',
         type: 'button',
         onClick: this.addNewSectionHandler.bind(this),
       },
       {
-        id: 'about-card-add-cancel',
+        id: 'project-card-add-cancel',
         text: 'Cancel',
         type: 'button',
         onClick: closeModal,
@@ -50,22 +57,25 @@ export default class AddAboutSection extends Component<
     if (!this.state.formRef) return;
     const { current } = this.state.formRef;
     if (!current) return;
-    const { title, text } = current.values;
+    console.log(current.values);
+    const { title, text, status, slides } = current.values;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = '/api/about';
+      const url = '/api/projects';
       const data = JSON.stringify({
         title,
         text,
+        status,
+        slides,
       });
       xhr.open('POST', url);
       xhr.onload = function () {
         try {
           if (xhr.status >= 200 && xhr.status < 300) {
             resolve({
-              about_section: title,
-              about_text: text,
+              project_section: title,
+              project_text: text,
             });
           }
         } catch {
@@ -115,16 +125,40 @@ export default class AddAboutSection extends Component<
       formRef: this.formCreateRef,
     });
   }
+
+  addSlideToProject() {
+    const { fields } = this.state;
+    const slide = (
+      <fieldset key={fields} id="project-card-add-slides">
+        <label>Slide {fields + 1}</label>
+        <Field
+          id={`project-card-add-slide-path-${fields}`}
+          name={`slides[${fields}].path`}
+          as="input"
+        />
+        <Field
+          id={`project-card-add-slide-description-${fields}`}
+          name={`slides[${fields}].description`}
+          as="textarea"
+        />
+      </fieldset>
+    );
+    this.setState({ fields: fields + 1 });
+    this.setState({ slideJSX: [...this.state.slideJSX, slide] });
+    console.log(this.state.slideJSX);
+    return slide;
+  }
+
   render() {
     if (!this.props.loggedIn) return;
     return (
       <>
-        <button onClick={this.showAddModal} id={'about-card-add-edit'}>
-          Add New Section
+        <button onClick={this.showAddModal} id={'project-card-add-edit'}>
+          Add New Project
         </button>
         <Modal
-          id={'about-card-add-edit-modal'}
-          title={'Edit About Card add'}
+          id={'project-card-add-edit-modal'}
+          title={'Edit project Card add'}
           buttons={this.defaultModalButtons}
           ref={this.modalCreateRef}
         >
@@ -133,6 +167,8 @@ export default class AddAboutSection extends Component<
             initialValues={{
               title: '',
               text: '',
+              status: 'active',
+              slides: [],
             }}
             onSubmit={(values) => {
               console.log(values);
@@ -140,14 +176,26 @@ export default class AddAboutSection extends Component<
           >
             <Form>
               <label>Title</label>
-              <Field id={'about-card-add-title'} name="title" />
+              <Field id={'project-card-add-title'} name="title" />
 
               <label>Text</label>
-              <Field
-                id={'about-card-add-edit-text'}
-                name="text"
-                as="textarea"
-              />
+              <Field id={'project-card-add-text'} name="text" as="textarea" />
+
+              <label>Status</label>
+              <Field id={'project-card-add-status'} name="status" as="select">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </Field>
+              <label>Slides</label>
+              <fieldset id="project-card-add-slides-container">
+                {this.state.slideJSX}
+              </fieldset>
+              <button
+                className="add-slide-to-form"
+                onClick={this.addSlideToProject.bind(this)}
+              >
+                Add Slide
+              </button>
             </Form>
           </Formik>
         </Modal>

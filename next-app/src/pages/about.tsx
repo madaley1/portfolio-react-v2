@@ -8,6 +8,9 @@ import React, { Component, createRef } from 'react';
 import EditAboutCard from '@/components/about/EditAboutCard';
 import AddAboutSection from '@/components/about/AddAboutSection';
 
+// custom function imports
+import loggedInCheck from '@/lib/loggedInCheck';
+
 //classes
 export default class About extends Component {
   loggedIn: boolean;
@@ -43,11 +46,7 @@ export default class About extends Component {
   }
 
   componentDidMount() {
-    if (!process.env.NEXT_PUBLIC_ADMIN_KEY) return;
-    if (
-      sessionStorage.getItem('admin') &&
-      sessionStorage.getItem('admin') === process.env.NEXT_PUBLIC_ADMIN_KEY
-    ) {
+    if (loggedInCheck()) {
       this.loggedIn = true;
     }
   }

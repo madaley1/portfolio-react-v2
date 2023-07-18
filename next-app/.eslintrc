@@ -25,6 +25,9 @@
       "impliedStrict": true
     }
   },
+  "globals":{
+    "JSX": "readonly",
+  },
   "rules": {
     "prettier/prettier": [
       "error", 

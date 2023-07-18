@@ -14,7 +14,6 @@ export function closeModal(
   intendedTarget?: string
 ) {
   e.preventDefault();
-  console.log(e.target);
   if (!(e.target instanceof HTMLElement)) return;
   if (intendedTarget && !e.target.matches(intendedTarget)) return;
   document.querySelectorAll('.modal.open').forEach((modal) => {
