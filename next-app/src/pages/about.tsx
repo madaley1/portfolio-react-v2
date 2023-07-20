@@ -7,6 +7,7 @@ import React, { Component, createRef } from 'react';
 // component imports
 import EditAboutCard from '@/components/about/EditAboutCard';
 import AddAboutSection from '@/components/about/AddAboutSection';
+import Loading from '@/components/Loading';
 
 // custom function imports
 import loggedInCheck from '@/lib/loggedInCheck';
@@ -70,23 +71,26 @@ export default class About extends Component {
   }
 
   render() {
+    const content = this.state.content[0].id
+      ? this.state.content.map((key: Record<string, any>, index: number) => {
+          return (
+            <div className="about-section-card" key={index}>
+              <h2>{key.about_section}</h2>
+              <p>{decodeURI(key.about_text)}</p>
+              <EditAboutCard
+                index={key.id}
+                textObject={key}
+                loggedIn={this.loggedIn}
+              />
+            </div>
+          );
+        })
+      : [<Loading key="0" />];
     return (
       <>
         <div>
           {/* {this.globalAboutEditButton()} */}
-          {this.state.content.map((key: Record<string, any>, index: number) => {
-            return (
-              <div className="about-section-card" key={index}>
-                <h2>{key.about_section}</h2>
-                <p>{decodeURI(key.about_text)}</p>
-                <EditAboutCard
-                  index={key.id}
-                  textObject={key}
-                  loggedIn={this.loggedIn}
-                />
-              </div>
-            );
-          })}
+          {content}
           <AddAboutSection loggedIn={this.loggedIn} />
         </div>
       </>

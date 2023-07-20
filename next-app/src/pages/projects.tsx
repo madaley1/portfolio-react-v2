@@ -8,6 +8,7 @@ import React, { Component, createRef } from 'react';
 import Slideshow from '@/components/Slideshow';
 import AddProjectCard from '@/components/projects/AddProjectCard';
 import EditProjectCard from '@/components/projects/EditProjectCard';
+import Loading from '@/components/Loading';
 
 // custom function imports
 import loggedInCheck from '@/lib/loggedInCheck';
@@ -78,61 +79,61 @@ export default class Projects extends Component {
   }
 
   render() {
+    const finished = this.state.content.projectsArray
+      ? this.state.content.projectsArray.map((project: Record<string, any>) => {
+          if (project.status !== 'inactive') return;
+          const slides = this.state.content.slideshows[project.id] || null;
+          const object = {
+            project,
+            slides,
+          };
+          return (
+            <>
+              <div key={project.id}>
+                <h2>{project.name}</h2>
+                <p>{decodeURI(project.description)}</p>
+                <Slideshow slides={slides} />
+              </div>
+              <EditProjectCard
+                index={project.id}
+                loggedIn={this.loggedIn}
+                textObject={object}
+              />
+            </>
+          );
+        })
+      : [<Loading key="0" />];
+    const active = this.state.content.projectsArray
+      ? this.state.content.projectsArray.map((project: Record<string, any>) => {
+          if (project.status !== 'active') return;
+          const slides = this.state.content.slideshows[project.id] || null;
+          const object = {
+            project,
+            slides,
+          };
+          return (
+            <>
+              <div key={project.id}>
+                <h2>{project.name}</h2>
+                <p>{decodeURI(project.description)}</p>
+                <Slideshow slides={slides} />
+              </div>
+              <EditProjectCard
+                index={project.id}
+                loggedIn={this.loggedIn}
+                textObject={object}
+              />
+            </>
+          );
+        })
+      : [<Loading key="0" />];
     return (
       <div>
         <AddProjectCard loggedIn={this.loggedIn} />
         <h1>Active Projects</h1>
-        {this.state.content.projectsArray &&
-          this.state.content.projectsArray.map(
-            (project: Record<string, any>) => {
-              if (project.status !== 'active') return;
-              const slides = this.state.content.slideshows[project.id] || null;
-              const object = {
-                project,
-                slides,
-              };
-              return (
-                <>
-                  <div key={project.id}>
-                    <h2>{project.name}</h2>
-                    <p>{decodeURI(project.description)}</p>
-                    <Slideshow slides={slides} />
-                  </div>
-                  <EditProjectCard
-                    index={project.id}
-                    loggedIn={this.loggedIn}
-                    textObject={object}
-                  />
-                </>
-              );
-            }
-          )}
+        {active}
         <h1>Finished Projects</h1>
-        {this.state.content.projectsArray &&
-          this.state.content.projectsArray.map(
-            (project: Record<string, any>) => {
-              if (project.status !== 'inactive') return;
-              const slides = this.state.content.slideshows[project.id] || null;
-              const object = {
-                project,
-                slides,
-              };
-              return (
-                <>
-                  <div key={project.id}>
-                    <h2>{project.name}</h2>
-                    <p>{decodeURI(project.description)}</p>
-                    <Slideshow slides={slides} />
-                  </div>
-                  <EditProjectCard
-                    index={project.id}
-                    loggedIn={this.loggedIn}
-                    textObject={object}
-                  />
-                </>
-              );
-            }
-          )}
+        {finished}
       </div>
     );
   }
