@@ -12,12 +12,22 @@ import Loading from '@/components/Loading';
 // custom function imports
 import loggedInCheck from '@/lib/loggedInCheck';
 
+type content = {
+  id: number;
+  about_section: string;
+  about_text: string;
+};
+
+interface AboutState {
+  content: content[];
+}
+
 //classes
-export default class About extends Component {
+export default class About extends Component<AboutState> {
   loggedIn: boolean;
 
   state = {
-    content: [{}],
+    content: [{}] as content[],
   };
   constructor(props: any) {
     super(props);
