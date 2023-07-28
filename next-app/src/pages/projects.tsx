@@ -84,7 +84,7 @@ export default class Projects extends Component {
         <h1>Active Projects</h1>
         {this.state.content.projectsArray &&
           this.state.content.projectsArray.map(
-            (project: Record<string, any>) => {
+            (project: Record<string, any>, index: number) => {
               if (project.status !== 'active') return;
               const slides = this.state.content.slideshows[project.id] || null;
               const object = {
@@ -93,7 +93,7 @@ export default class Projects extends Component {
               };
               return (
                 <>
-                  <div key={project.id}>
+                  <div className="project project-active" key={project.id}>
                     <h2>{project.name}</h2>
                     <p>{decodeURI(project.description)}</p>
                     <Slideshow slides={slides} />
@@ -110,7 +110,7 @@ export default class Projects extends Component {
         <h1>Finished Projects</h1>
         {this.state.content.projectsArray &&
           this.state.content.projectsArray.map(
-            (project: Record<string, any>) => {
+            (project: Record<string, any>, index: number) => {
               if (project.status !== 'inactive') return;
               const slides = this.state.content.slideshows[project.id] || null;
               const object = {
@@ -119,7 +119,7 @@ export default class Projects extends Component {
               };
               return (
                 <>
-                  <div key={project.id}>
+                  <div className="project project-inactive" key={project.id}>
                     <h2>{project.name}</h2>
                     <p>{decodeURI(project.description)}</p>
                     <Slideshow slides={slides} />

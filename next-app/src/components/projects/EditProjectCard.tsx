@@ -207,7 +207,7 @@ export default class EditProjectCard extends Component<
 
     const values = {
       title: this.props.textObject.project.name,
-      text: this.props.textObject.project.description,
+      text: decodeURI(this.props.textObject.project.description),
       status: this.props.textObject.project.status,
       slides: this.props.textObject.slides,
     };
