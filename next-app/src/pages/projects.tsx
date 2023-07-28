@@ -61,6 +61,7 @@ export default class Projects extends Component {
         projects.map((project: Record<string, any>) =>
           projectsArray.push(project)
         );
+        projectsArray.sort((a, b) => a.id - b.id);
         const slideshows: Record<number, any> = this.filterSlidesToShows(
           projectSlides,
           projectsArray
