@@ -131,9 +131,57 @@ export default class Projects extends Component {
       <div>
         <AddProjectCard loggedIn={this.loggedIn} />
         <h1>Active Projects</h1>
-        {active}
+        {this.state.content.projectsArray &&
+          this.state.content.projectsArray.map(
+            (project: Record<string, any>, index: number) => {
+              if (project.status !== 'active') return;
+              const slides = this.state.content.slideshows[project.id] || null;
+              const object = {
+                project,
+                slides,
+              };
+              return (
+                <>
+                  <div className="project project-active" key={project.id}>
+                    <h2>{project.name}</h2>
+                    <p>{decodeURI(project.description)}</p>
+                    <Slideshow slides={slides} />
+                  </div>
+                  <EditProjectCard
+                    index={project.id}
+                    loggedIn={this.loggedIn}
+                    textObject={object}
+                  />
+                </>
+              );
+            }
+          )}
         <h1>Finished Projects</h1>
-        {finished}
+        {this.state.content.projectsArray &&
+          this.state.content.projectsArray.map(
+            (project: Record<string, any>, index: number) => {
+              if (project.status !== 'inactive') return;
+              const slides = this.state.content.slideshows[project.id] || null;
+              const object = {
+                project,
+                slides,
+              };
+              return (
+                <>
+                  <div className="project project-inactive" key={project.id}>
+                    <h2>{project.name}</h2>
+                    <p>{decodeURI(project.description)}</p>
+                    <Slideshow slides={slides} />
+                  </div>
+                  <EditProjectCard
+                    index={project.id}
+                    loggedIn={this.loggedIn}
+                    textObject={object}
+                  />
+                </>
+              );
+            }
+          )}
       </div>
     );
   }

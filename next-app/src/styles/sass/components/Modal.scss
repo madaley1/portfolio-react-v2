@@ -20,6 +20,7 @@
     background: #18281a;
     padding: 2em 2em;
     border-radius: 15px;
+    overflow-y: scroll;
     &.open {
       display: block;
     }
