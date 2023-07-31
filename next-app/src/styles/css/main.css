@@ -376,6 +376,7 @@ button {
 #index .link {
   text-decoration: underline;
   font-style: italic;
+  color: var(--lgreen);
 }
 
 .about-section-card {
