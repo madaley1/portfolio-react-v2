@@ -6,7 +6,7 @@ import * as crypto from 'crypto';
 
 export default async function handler(req: any, res: any) {
   const client = createClient({
-    connectionString: process.env.NEXT_PUBLIC_POSTGRES_URL_NON_POOLING,
+    connectionString: process.env.POSTGRES_URL_NON_POOLING,
   });
   await client.connect();
   if (req.query.email && req.query.password) {
@@ -24,10 +24,10 @@ export default async function handler(req: any, res: any) {
         const acctSalt = rows[0].salt;
 
         const unhashedFinalPass = queryPassword + acctSalt;
-        if (!process.env.NEXT_PUBLIC_PASS_HASH) {
+        if (!process.env.PASS_HASH) {
           throw new Error('No hash found in environment variables');
         }
-        const hash = process.env.NEXT_PUBLIC_PASS_HASH;
+        const hash = process.env.PASS_HASH;
 
         const hashedFinalPass = crypto
           .pbkdf2Sync(unhashedFinalPass, acctSalt, 1000, 32, hash)

@@ -3,7 +3,7 @@ import { createClient } from '@vercel/postgres';
 
 export default async function handler(req: any, res: any) {
   const client = createClient({
-    connectionString: process.env.NEXT_PUBLIC_POSTGRES_URL_NON_POOLING,
+    connectionString: process.env.POSTGRES_URL_NON_POOLING,
   });
   await client.connect();
   try {
