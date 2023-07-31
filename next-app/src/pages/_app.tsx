@@ -15,7 +15,15 @@ export default function App({ Component, pageProps }: AppProps) {
     throw new Error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY not defined in .env.local');
   }
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={key}>
+    <GoogleReCaptchaProvider
+      reCaptchaKey={key}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: 'head',
+        nonce: undefined,
+      }}
+    >
       <Layout>
         <Component {...pageProps} />
       </Layout>

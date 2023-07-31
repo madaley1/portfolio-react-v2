@@ -414,4 +414,11 @@ button {
   margin-bottom: 0.5em;
 }
 
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 500px;
+  margin: auto;
+}
+
 /*# sourceMappingURL=main.css.map */
