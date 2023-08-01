@@ -75,9 +75,47 @@ export default class Projects extends Component {
       });
   }
 
+  processToProjectData(data: any) {
+    if (!data.projectsArray) return;
+    const projects = data.projectsArray;
+    if (!projects || Object.entries(projects).length < 0) return;
+    console.log(data);
+    const projectData = projects.map((project: any, index: number) => {
+      if (
+        !project.id ||
+        !project.name ||
+        !project.description ||
+        !project.status
+      )
+        return false;
+      const { id, name, description, status } = project;
+
+      const currentProjectData = {
+        id,
+        title: name,
+        text: decodeURI(description),
+        status,
+        slides: [],
+      };
+      if (!data.slideshows[id]) return currentProjectData;
+      const { slideshows } = data;
+      currentProjectData.slides = slideshows[id];
+      return currentProjectData;
+    });
+    return projectData;
+  }
+
   componentDidMount() {
     if (loggedInCheck()) {
       this.loggedIn = true;
+    }
+  }
+
+  componentDidUpdate(): void {
+    if (this.loggedIn) {
+      const { content } = this.state;
+      const projectData = this.processToProjectData(content);
+      console.log(projectData);
     }
   }
 

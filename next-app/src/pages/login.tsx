@@ -22,10 +22,10 @@ export default class Login extends Component {
     this.passwordRef = createRef();
     this.email = '';
     this.password = '';
-    if (!process.env.PASS_HASH) {
+    if (!process.env.NEXT_PUBLIC_PASS_HASH) {
       throw new Error('No hash found in environment variables');
     }
-    this.hash = process.env.PASS_HASH;
+    this.hash = process.env.NEXT_PUBLIC_PASS_HASH;
   }
 
   submitLoginRequest(email: string, password: string) {
