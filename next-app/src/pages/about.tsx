@@ -4,6 +4,8 @@ import axios from 'axios';
 // React Imports
 import React, { Component, createRef } from 'react';
 
+import Head from 'next/head';
+
 // component imports
 import EditAboutCard from '@/components/about/EditAboutCard';
 import AddAboutSection from '@/components/about/AddAboutSection';
@@ -98,6 +100,13 @@ export default class About extends Component<AboutState> {
       : [<Loading key="0" />];
     return (
       <>
+        <Head>
+          <title>About | Daley Development</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
         <div>
           {/* {this.globalAboutEditButton()} */}
           {content}

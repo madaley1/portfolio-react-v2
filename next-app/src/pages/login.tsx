@@ -1,6 +1,8 @@
 // React Imports
 import React, { Component, createRef } from 'react';
 
+import Head from 'next/head';
+
 //component imports
 import { Formik, Form, Field } from 'formik';
 
@@ -83,36 +85,45 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div id="login">
-        <h1>The Login</h1>
-        <Formik
-          key={1}
-          initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => this.submitLogin(values)}
-        >
-          <Form>
-            <label>Email</label>
-            <Field
-              id="email"
-              type="email"
-              name="email"
-              placeholder="email"
-              required
-            />
+      <>
+        <Head>
+          <title>Login | Daley Development</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        <div id="login">
+          <h1>The Login</h1>
+          <Formik
+            key={1}
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => this.submitLogin(values)}
+          >
+            <Form>
+              <label>Email</label>
+              <Field
+                id="email"
+                type="email"
+                name="email"
+                placeholder="email"
+                required
+              />
 
-            <label>Password</label>
-            <Field
-              id="password"
-              type="password"
-              name="password"
-              placeholder="password"
-              required
-            />
+              <label>Password</label>
+              <Field
+                id="password"
+                type="password"
+                name="password"
+                placeholder="password"
+                required
+              />
 
-            <button type="submit">Login</button>
-          </Form>
-        </Formik>
-      </div>
+              <button type="submit">Login</button>
+            </Form>
+          </Formik>
+        </div>
+      </>
     );
   }
 }

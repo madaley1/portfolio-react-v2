@@ -4,6 +4,8 @@ import axios from 'axios';
 // React Imports
 import React, { Component, createRef } from 'react';
 
+import Head from 'next/head';
+
 // component imports
 import Slideshow from '@/components/Slideshow';
 import AddProjectCard from '@/components/projects/AddProjectCard';
@@ -130,6 +132,13 @@ export default class Projects extends Component {
       : [<Loading key="0" />];
     return (
       <div>
+        <Head>
+          <title>Projects | Daley Development</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
         <AddProjectCard loggedIn={this.loggedIn} />
         <h1>Active Projects</h1>
         {active}

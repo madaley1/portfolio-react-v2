@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Head from 'next/head';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import {
@@ -45,7 +46,14 @@ class Contact extends Component {
   }
   render() {
     return (
-      <div>
+      <>
+        <Head>
+          <title>Contact | Daley Development</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
         <h1>The Contact</h1>
         <Formik
           initialValues={{
@@ -69,7 +77,7 @@ class Contact extends Component {
             <button type="submit">Clear</button>
           </Form>
         </Formik>
-      </div>
+      </>
     );
   }
 }
