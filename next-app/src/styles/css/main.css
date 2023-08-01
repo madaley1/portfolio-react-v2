@@ -373,6 +373,11 @@ button {
 #index #titleCard .namePlate-text p:has(small) {
   font-size: 16px;
 }
+#index #titleCard > p {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+}
 #index .link {
   text-decoration: underline;
   font-style: italic;
