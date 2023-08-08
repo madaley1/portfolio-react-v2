@@ -8,6 +8,7 @@ import Head from 'next/head';
 
 // component imports
 import Slideshow from '@/components/Slideshow';
+import GlobalProjectEditCard from '@/components/projects/GlobalProjectEditCard';
 import AddProjectCard from '@/components/projects/AddProjectCard';
 import EditProjectCard from '@/components/projects/EditProjectCard';
 import Loading from '@/components/Loading';
@@ -15,9 +16,12 @@ import Loading from '@/components/Loading';
 // custom function imports
 import loggedInCheck from '@/lib/loggedInCheck';
 
+import type { projectData } from '@/types/projects/projectData';
+
 export default class Projects extends Component {
   state = {
     content: {} as Record<string, any>,
+    projectData: [] as projectData[],
   };
 
   loggedIn: boolean;
@@ -79,7 +83,6 @@ export default class Projects extends Component {
     if (!data.projectsArray) return;
     const projects = data.projectsArray;
     if (!projects || Object.entries(projects).length < 0) return;
-    console.log(data);
     const projectData = projects.map((project: any, index: number) => {
       if (
         !project.id ||
@@ -113,9 +116,15 @@ export default class Projects extends Component {
 
   componentDidUpdate(): void {
     if (this.loggedIn) {
-      const { content } = this.state;
-      const projectData = this.processToProjectData(content);
-      console.log(projectData);
+      if (
+        this.state.projectData.length !==
+        this.state.content.projectsArray.length
+      ) {
+        const { content } = this.state;
+        const projectData = this.processToProjectData(content);
+        projectData.sort((a: projectData, b: projectData) => a.id - b.id);
+        this.setState({ projectData });
+      }
     }
   }
 
@@ -177,6 +186,11 @@ export default class Projects extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
+        <GlobalProjectEditCard
+          loggedIn={this.loggedIn}
+          projectData={this.state.projectData}
+          key={this.state.projectData.length}
+        />
         <AddProjectCard loggedIn={this.loggedIn} />
         <h1>Active Projects</h1>
         {active}
