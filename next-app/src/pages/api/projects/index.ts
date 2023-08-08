@@ -119,14 +119,18 @@ export default async function handler(req: any, res: any) {
           }
           updateTableQueries.push(
             `UPDATE reorder SET new_id = ${key} WHERE id = ${
-              activeProjectEntries[value as keyof typeof activeProjectEntries]
-                .id
+              activeProjectEntries[
+                value as keyof typeof activeProjectEntries
+              ] as Record<string, any>
             };`
           );
           updateSlideQueries.push(
             `UPDATE slide_reorder SET new_id = ${key} WHERE slideshow_id = ${
-              activeProjectEntries[value as keyof typeof activeProjectEntries]
-                .id
+              (
+                activeProjectEntries[
+                  value as keyof typeof activeProjectEntries
+                ] as Record<string, any>
+              ).id
             };`
           );
           insertTableQueries.push(
