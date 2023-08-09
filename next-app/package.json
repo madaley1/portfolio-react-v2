@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
     "@sendgrid/mail": "^7.7.0",
     "@types/node": "20.2.3",
     "@types/react": "18.2.6",
