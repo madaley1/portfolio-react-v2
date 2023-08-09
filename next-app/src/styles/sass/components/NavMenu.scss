@@ -1,0 +1,103 @@
+// Note: :has() does not currently work in firefox and other mozilla-based browsers
+:root {
+  --random-number: 5s;
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+:root:has(.navMenu.green) {
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+:root:has(.navMenu.blue) {
+  --bright: rgb(0, 174, 255);
+  --reflection-bright: rgba(0, 204, 255, 0.5);
+
+  --dim: rgba(0, 174, 255, 0.1);
+  --reflection-dim: rgba(0, 204, 255, 0.05);
+}
+:root:has(.navMenu.purple) {
+  --bright: rgb(115, 0, 255);
+  --reflection-bright: rgba(115, 0, 255, 0.5);
+
+  --dim: rgba(115, 0, 255, 0.1);
+  --reflection-dim: rgba(115, 0, 255, 0.05);
+}
+:root:has(.navMenu.yellow) {
+  --bright: rgb(217, 255, 0);
+  --reflection-bright: rgba(217, 255, 0, 0.5);
+
+  --dim: rgba(217, 255, 0, 0.1);
+  --reflection-dim: rgba(217, 255, 0, 0.05);
+}
+:root:has(.navMenu.red) {
+  --bright: rgb(255, 0, 0);
+  --reflection-bright: rgba(255, 0, 0, 0.5);
+
+  --dim: rgba(255, 0, 0, 0.1);
+  --reflection-dim: rgba(255, 0, 0, 0.05);
+}
+.navMenu {
+  width: 15vw;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  position: fixed;
+  justify-content: flex-start;
+  background-color: rgb(20, 20, 20);
+  box-shadow: inset -165px 84px 165px -190px var(--reflection-bright),
+    -5px 0px 45px var(--bright);
+  animation: border-flicker var(--random-number) linear infinite;
+  top: 0;
+  left: 0;
+  padding-top: 2.5em;
+
+  > a {
+    display: block;
+    margin: 1em 0 1em 1em;
+  }
+  &-list {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin: 0 0 0 1.5em;
+    li {
+      text-decoration: none;
+      list-style: none;
+      width: 150px;
+      margin: 0.5em 0;
+    }
+  }
+}
+
+@keyframes border-flicker {
+  0%,
+  35%,
+  45%,
+  46.5%,
+  65%,
+  72%,
+  74%,
+  95% {
+    box-shadow: inset -165px 84px 165px -190px var(--reflection-dim),
+      -5px 0px 45px var(--dim);
+  }
+  1%,
+  34%,
+  35.5%,
+  45.75%,
+  47%,
+  66%,
+  72.5%,
+  75%,
+  94%,
+  99% {
+    box-shadow: inset -165px 84px 165px -190px var(--reflection-bright),
+      -5px 0px 45px var(--bright);
+  }
+}

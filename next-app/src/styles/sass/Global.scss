@@ -1,0 +1,143 @@
+/*CSS Reset + Font Specification*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+@font-face {
+  font-family: "SourceCodePro";
+  src: url("../fonts/SourceCodePro-Regular.ttf") format("truetype");
+  src: url("../fonts/SourceCodePro-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DroidSansMono";
+  src: url("../fonts/DroidSansMono.ttf") format("truetype");
+}
+
+:root {
+  --grey: rgb(24, 24, 24);
+  --green: #23591d;
+  --lgreen: #377930;
+  --blue: #449398;
+  /*variables for gradient*/
+  --d: 2500ms;
+  --angle: 62.5deg;
+  --c2: rgba(168, 239, 255, 0.021);
+}
+
+body {
+  font-family: "DroidSansMono", "SourceCodeMono", sans-serif;
+  background-color: rgb(42, 43, 43) !important;
+  color: rgba(230, 230, 230, 0.9) !important;
+  padding: 1em;
+}
+
+h1 {
+  font-size: 24pt;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+p {
+  white-space: pre-wrap;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  margin: 1em 0 2em 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

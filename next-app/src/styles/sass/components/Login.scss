@@ -1,0 +1,21 @@
+#login {
+  > * {
+    margin: auto;
+  }
+  h1 {
+    width: max-content;
+  }
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 25em;
+    margin-top: 1em;
+    > label {
+      margin-top: 1em;
+    }
+    > button {
+      margin-top: 2em;
+    }
+  }
+}
