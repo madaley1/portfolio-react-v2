@@ -24,10 +24,10 @@ export default async function handler(req: any, res: any) {
         const acctSalt = rows[0].salt;
 
         const unhashedFinalPass = queryPassword + acctSalt;
-        if (!process.env.PASS_HASH) {
+        if (!process.env.NEXT_PUBLIC_PASS_HASH) {
           throw new Error('No hash found in environment variables');
         }
-        const hash = process.env.PASS_HASH;
+        const hash = process.env.NEXT_PUBLIC_PASS_HASH;
 
         const hashedFinalPass = crypto
           .pbkdf2Sync(unhashedFinalPass, acctSalt, 1000, 32, hash)
