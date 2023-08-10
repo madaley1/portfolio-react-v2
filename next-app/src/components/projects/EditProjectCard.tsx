@@ -68,7 +68,6 @@ export default class EditProjectCard extends Component<
     const { current } = this.state.formRef;
     if (!current) return;
     const { title, text, status, slides } = current.values;
-    console.log(slides);
     const data = JSON.stringify({
       id: this.props.index,
       title,
@@ -76,7 +75,6 @@ export default class EditProjectCard extends Component<
       status,
       slides: slides,
     });
-    console.log(Object.entries(slides));
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const url = '/api/projects';
@@ -173,7 +171,6 @@ export default class EditProjectCard extends Component<
       this.setState({ fields: 0 });
     }
     const { fields } = this.state;
-    console.log(fields);
     const slide = (
       <fieldset key={fields} id="project-card-add-slides">
         <label>Slide {fields}</label>
@@ -199,42 +196,43 @@ export default class EditProjectCard extends Component<
       modalRef: this.modalCreateRef,
       formRef: this.formCreateRef,
     });
-    if (this.props.textObject.slides.length) {
-      this.setState({ fields: this.props.textObject.slides.length });
+    const { slides, status, text, title } = this.props.textObject;
+    if (slides && slides.length) {
+      this.setState({ fields: slides.length });
     } else {
       this.setState({ fields: 0 });
     }
-
-    const values = {
-      title: this.props.textObject.project.name,
-      text: decodeURI(this.props.textObject.project.description),
-      status: this.props.textObject.project.status,
-      slides: this.props.textObject.slides,
-    };
-    const { slides } = this.props.textObject;
-    const processedSlides = Object.entries(slides).map(
-      (slide: Record<string, any>, index: number) => {
-        return (
-          <fieldset key={index} id="project-card-add-slides">
-            <label>Slide {index + 1}</label>
-            <Field
-              id={`project-card-add-slide-path-${index}`}
-              name={`slides[${index}].path`}
-              as="input"
-            />
-            <Field
-              id={`project-card-add-slide-description-${index}`}
-              name={`slides[${index}].description`}
-              as="textarea"
-            />
-          </fieldset>
-        );
-      }
-    );
-    this.setState({
-      initialValues: values,
-      slideJSX: processedSlides,
-    });
+    if (slides && slides.length < 0) {
+      const values = {
+        title,
+        text,
+        status,
+        slides,
+      };
+      const processedSlides = Object.entries(slides).map(
+        (slide: Record<string, any>, index: number) => {
+          return (
+            <fieldset key={index} id="project-card-add-slides">
+              <label>Slide {index + 1}</label>
+              <Field
+                id={`project-card-add-slide-path-${index}`}
+                name={`slides[${index}].path`}
+                as="input"
+              />
+              <Field
+                id={`project-card-add-slide-description-${index}`}
+                name={`slides[${index}].description`}
+                as="textarea"
+              />
+            </fieldset>
+          );
+        }
+      );
+      this.setState({
+        initialValues: values,
+        slideJSX: processedSlides,
+      });
+    }
   }
   render() {
     if (!this.props.loggedIn) return;
@@ -258,7 +256,7 @@ export default class EditProjectCard extends Component<
             initialValues={this.state.initialValues}
             enableReinitialize={true}
             onSubmit={(values) => {
-              console.log(values);
+              return values;
             }}
           >
             <Form>
