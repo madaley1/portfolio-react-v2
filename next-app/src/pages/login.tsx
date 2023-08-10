@@ -15,7 +15,7 @@ export default class Login extends Component {
   email: string;
   password: string;
 
-  constructor(props: any) {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.submitRef = createRef();
     this.userRef = createRef();

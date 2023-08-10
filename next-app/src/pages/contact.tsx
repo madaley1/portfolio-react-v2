@@ -25,7 +25,6 @@ class Contact extends Component {
       recaptchaResponse,
       values,
     };
-    console.log(body);
     const result = await axios
       .post('/api/recaptcha', body)
       .then((response) => {
@@ -34,7 +33,6 @@ class Contact extends Component {
       .catch((err) => {
         console.error(err.response);
       });
-    console.log(result);
     if (result.success) {
       axios
         .post('/api/contact', values)

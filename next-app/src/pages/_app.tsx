@@ -12,7 +12,7 @@ import '@/Styles/css/main.css';
 export default function App({ Component, pageProps }: AppProps) {
   const key = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   if (!key || !(typeof key === 'string')) {
-    throw new Error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY not defined in .env.local');
+    throw new Error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY not defined in .env');
   }
   return (
     <GoogleReCaptchaProvider

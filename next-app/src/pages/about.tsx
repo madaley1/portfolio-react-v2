@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // React Imports
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 
 import Head from 'next/head';
 

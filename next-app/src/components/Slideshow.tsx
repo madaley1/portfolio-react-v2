@@ -3,10 +3,6 @@ import Image from 'next/image';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 
-type Slides = {
-  path: string;
-  description: string;
-};
 type SlideshowProps = {
   slides: Record<string, any> | null;
 };

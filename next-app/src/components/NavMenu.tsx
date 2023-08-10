@@ -1,5 +1,5 @@
 // imports
-import React, { useEffect, useState, createRef, Component } from 'react';
+import React, { createRef, Component } from 'react';
 
 // next imports
 import Image from 'next/image';
