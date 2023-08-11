@@ -340,7 +340,7 @@ button {
   outline: none;
 }
 .slideshow .dots .dot.active {
-  background: #000;
+  background: #6f66b0;
 }
 .slideshow .arrowContainer {
   display: block;
