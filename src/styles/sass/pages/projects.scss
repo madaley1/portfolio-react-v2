@@ -6,6 +6,10 @@
   border-radius: 25px;
   background-color: rgba(50, 50, 50, 1);
 
+  > * {
+    margin: 0 1em;
+  }
+
   h2 {
     font-size: 16pt;
     font-weight: 500;

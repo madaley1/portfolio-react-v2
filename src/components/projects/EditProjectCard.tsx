@@ -196,43 +196,42 @@ export default class EditProjectCard extends Component<
       modalRef: this.modalCreateRef,
       formRef: this.formCreateRef,
     });
-    const { slides, status, text, title } = this.props.textObject;
-    if (slides && slides.length) {
-      this.setState({ fields: slides.length });
+    const { project, slides } = this.props.textObject;
+    const { status, description, name } = project;
+    if (slides && Object.entries(slides).length) {
+      this.setState({ fields: Object.entries(slides).length });
     } else {
       this.setState({ fields: 0 });
     }
-    if (slides && slides.length < 0) {
-      const values = {
-        title,
-        text,
-        status,
-        slides,
-      };
-      const processedSlides = Object.entries(slides).map(
-        (slide: Record<string, any>, index: number) => {
-          return (
-            <fieldset key={index} id="project-card-add-slides">
-              <label>Slide {index + 1}</label>
-              <Field
-                id={`project-card-add-slide-path-${index}`}
-                name={`slides[${index}].path`}
-                as="input"
-              />
-              <Field
-                id={`project-card-add-slide-description-${index}`}
-                name={`slides[${index}].description`}
-                as="textarea"
-              />
-            </fieldset>
-          );
-        }
-      );
-      this.setState({
-        initialValues: values,
-        slideJSX: processedSlides,
-      });
-    }
+    const values = {
+      title: name,
+      text: decodeURIComponent(description),
+      status,
+      slides,
+    };
+    const processedSlides = Object.entries(slides).map(
+      (slide: Record<string, any>, index: number) => {
+        return (
+          <fieldset key={index} id="project-card-add-slides">
+            <label>Slide {index + 1}</label>
+            <Field
+              id={`project-card-add-slide-path-${index}`}
+              name={`slides[${index}].path`}
+              as="input"
+            />
+            <Field
+              id={`project-card-add-slide-description-${index}`}
+              name={`slides[${index}].description`}
+              as="textarea"
+            />
+          </fieldset>
+        );
+      }
+    );
+    this.setState({
+      initialValues: values,
+      slideJSX: processedSlides,
+    });
   }
   render() {
     if (!this.props.loggedIn) return;

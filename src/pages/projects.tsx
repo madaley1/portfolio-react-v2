@@ -191,6 +191,7 @@ export default class Projects extends Component {
                   index={idKey}
                   loggedIn={this.loggedIn}
                   textObject={object}
+                  key={idKey}
                 />
               </>
             );
