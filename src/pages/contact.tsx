@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import Head from 'next/head';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikProps, FormikValues } from 'formik';
 import axios from 'axios';
 import {
   IWithGoogleReCaptchaProps,
@@ -8,6 +8,8 @@ import {
 } from 'react-google-recaptcha-v3';
 
 class Contact extends Component {
+  formRef = createRef<FormikProps<FormikValues>>();
+
   async submitEmail(values: Record<string, unknown>) {
     const { executeRecaptcha } = (this.props as IWithGoogleReCaptchaProps)
       .googleReCaptchaProps;
@@ -41,6 +43,11 @@ class Contact extends Component {
         });
     }
   }
+
+  clearForm() {
+    if (!this.formRef.current) return;
+    this.formRef.current.resetForm();
+  }
   render() {
     return (
       <>
@@ -51,8 +58,12 @@ class Contact extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <div>
-          <h1>Contact</h1>
+        <div id="contact">
+          <h1>Contact Me</h1>
+          <p>
+            If you have any questions about my projects or would like to work
+            with me, please feel free to reach out via the form below!
+          </p>
           <Formik
             initialValues={{
               fname: '',
@@ -60,6 +71,7 @@ class Contact extends Component {
               email: '',
               message: '',
             }}
+            innerRef={this.formRef}
             onSubmit={this.submitEmail.bind(this)}
           >
             <Form>
@@ -72,7 +84,9 @@ class Contact extends Component {
               <label>Message</label>
               <Field as="textarea" name="message" />
               <button type="submit">Submit</button>
-              <button type="submit">Clear</button>
+              <button type="button" onClick={this.clearForm.bind(this)}>
+                Clear
+              </button>
             </Form>
           </Formik>
         </div>

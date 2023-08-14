@@ -477,11 +477,21 @@ button {
   margin-bottom: 0.5em;
 }
 
-form {
+div#contact {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  width: 50em;
+}
+div#contact h1 {
+  display: block;
+  width: max-content;
+}
+div#contact form {
   display: flex;
   flex-flow: column nowrap;
   width: 500px;
-  margin: auto;
+  margin: 1em auto;
 }
 
 /*# sourceMappingURL=main.css.map */
