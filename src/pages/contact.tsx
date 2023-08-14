@@ -8,11 +8,10 @@ import {
 } from 'react-google-recaptcha-v3';
 
 class Contact extends Component {
-  async submitEmail(values: Record<string, any>) {
+  async submitEmail(values: Record<string, unknown>) {
     const { executeRecaptcha } = (this.props as IWithGoogleReCaptchaProps)
       .googleReCaptchaProps;
     if (!executeRecaptcha) {
-      console.log('Recaptcha has not been loaded');
       return;
     }
 
@@ -31,14 +30,14 @@ class Contact extends Component {
         return response.data;
       })
       .catch((err) => {
-        console.error(err.response);
+        return err.response;
       });
     if (result.success) {
       axios
         .post('/api/contact', values)
         .then()
         .catch((err) => {
-          console.error(err.response);
+          return err.response;
         });
     }
   }
@@ -52,29 +51,31 @@ class Contact extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <h1>The Contact</h1>
-        <Formik
-          initialValues={{
-            fname: '',
-            lname: '',
-            email: '',
-            message: '',
-          }}
-          onSubmit={this.submitEmail.bind(this)}
-        >
-          <Form>
-            <label>First Name</label>
-            <Field type="text" name="fname" />
-            <label>Last Name</label>
-            <Field type="text" name="lname" />
-            <label>Email</label>
-            <Field type="text" name="email" />
-            <label>Message</label>
-            <Field as="textarea" name="message" />
-            <button type="submit">Submit</button>
-            <button type="submit">Clear</button>
-          </Form>
-        </Formik>
+        <div>
+          <h1>Contact</h1>
+          <Formik
+            initialValues={{
+              fname: '',
+              lname: '',
+              email: '',
+              message: '',
+            }}
+            onSubmit={this.submitEmail.bind(this)}
+          >
+            <Form>
+              <label>First Name</label>
+              <Field type="text" name="fname" />
+              <label>Last Name</label>
+              <Field type="text" name="lname" />
+              <label>Email</label>
+              <Field type="text" name="email" />
+              <label>Message</label>
+              <Field as="textarea" name="message" />
+              <button type="submit">Submit</button>
+              <button type="submit">Clear</button>
+            </Form>
+          </Formik>
+        </div>
       </>
     );
   }

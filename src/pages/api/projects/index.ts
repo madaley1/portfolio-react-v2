@@ -1,6 +1,5 @@
 // vercel database client
 import { createClient } from '@vercel/postgres';
-import { insert } from 'formik';
 
 export default async function handler(req: any, res: any) {
   const client = createClient({
