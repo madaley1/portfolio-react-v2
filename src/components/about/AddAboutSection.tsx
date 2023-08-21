@@ -16,6 +16,8 @@ import { AddModalFormProps, ModalFormState } from '@/types/about/modalForm';
 import type { ButtonComponent } from '@/types/about/modalForm';
 import type { addModalFormProps } from '@/types/about/modalForm';
 
+import styles from '@/Styles/sass/components/Modal.module.scss';
+
 export default class AddAboutSection extends Component<
   AddModalFormProps,
   ModalFormState
@@ -106,7 +108,7 @@ export default class AddAboutSection extends Component<
     const firstLayer = this.state.modalRef.current;
     if (!firstLayer || !firstLayer.modalRef.current) return;
     const { current } = firstLayer.modalRef;
-    current.classList.add('open');
+    current.classList.add(`${styles.open}`);
   };
 
   componentDidMount() {

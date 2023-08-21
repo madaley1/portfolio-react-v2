@@ -16,6 +16,8 @@ import { AddModalFormProps, ModalFormState } from '@/types/about/modalForm';
 import type { ButtonComponent } from '@/types/about/modalForm';
 import type { addModalFormProps } from '@/types/about/modalForm';
 
+import styles from '@/Styles/sass/components/Modal.module.scss';
+
 interface ProjectModalFormState extends ModalFormState {
   fields: number;
   slideJSX: JSX.Element[];
@@ -116,7 +118,7 @@ export default class AddprojectSection extends Component<
     const firstLayer = this.state.modalRef.current;
     if (!firstLayer || !firstLayer.modalRef.current) return;
     const { current } = firstLayer.modalRef;
-    current.classList.add('open');
+    current.classList.add(`${styles.open}`);
   };
 
   componentDidMount() {

@@ -141,7 +141,6 @@ export default class NavMenu extends Component {
     const { classes } = this.state;
     const classList = (classes: string[]) => {
       return classes.map((value) => {
-        console.log(value, `${styles[value as string]}`);
         if (!styles[value as string]) return value;
         return `${styles[value as string]}`;
       });

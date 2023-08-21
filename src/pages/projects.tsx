@@ -183,10 +183,9 @@ export default class Projects extends Component {
             if (typeof name !== 'string' || typeof description !== 'string')
               return;
             return (
-              <>
+              <div key={idKey}>
                 <div
                   className={`${styles.project} ${styles['project-inactive']}`}
-                  key={idKey}
                 >
                   <h2>{name}</h2>
                   <p>{decodeURI(description)}</p>
@@ -198,10 +197,10 @@ export default class Projects extends Component {
                   textObject={object}
                   key={idKey}
                 />
-              </>
+              </div>
             );
           })
-        : [<Loading key="0" />];
+        : [<Loading key={Math.random()} />];
     };
 
     const finished = processor('inactive');

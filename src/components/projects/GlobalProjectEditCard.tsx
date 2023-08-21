@@ -20,6 +20,8 @@ interface GlobalProjectEditState extends ModalFormState {
 import type { FormikProps } from 'formik';
 import type { ButtonComponent } from '@/types/about/modalForm';
 
+import styles from '@/Styles/sass/components/Modal.module.scss';
+
 export default class GlobalProjectEditCard extends Component<
   GlobalProjectEditProps,
   GlobalProjectEditState
@@ -50,9 +52,7 @@ export default class GlobalProjectEditCard extends Component<
         onClick: closeModal,
       },
     ];
-    this.setState({
-      projectData: this.props.projectData,
-    });
+    this.state.projectData = this.props.projectData;
   }
 
   submitModal() {
@@ -141,11 +141,12 @@ export default class GlobalProjectEditCard extends Component<
   openModal(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (!this.state.modalRef) return;
+
     const { modalRef } = this.state;
     const firstLayer = modalRef.current;
     if (!firstLayer || !firstLayer.modalRef.current) return;
     const { current } = firstLayer.modalRef;
-    current.classList.add('open');
+    current.classList.add(`${styles.open}`);
   }
 
   componentDidMount() {

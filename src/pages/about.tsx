@@ -17,6 +17,8 @@ import loggedInCheck from '@/lib/loggedInCheck';
 // style imports
 import styles from '@/Styles/sass/pages/about.module.scss';
 
+import modalStyles from '@/Styles/sass/components/Modal.module.scss';
+
 type content = {
   id: number;
   about_section: string;
@@ -82,7 +84,7 @@ export default class About extends Component<AboutState> {
     const id = `${target.id}-modal`;
     const modal = parent.querySelector(`#${id}`);
     if (!modal) return;
-    modal.classList.add('open');
+    modal.classList.add(`${modalStyles.open}`);
   }
 
   render() {

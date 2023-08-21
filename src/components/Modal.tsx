@@ -18,7 +18,8 @@ export function closeModal(
   e.preventDefault();
   if (!(e.target instanceof HTMLElement) || !intendedTarget) return;
   if (!intendedTarget.current) return;
-  intendedTarget.current.classList.remove('open');
+  console.log(intendedTarget.current);
+  intendedTarget.current.classList.remove(`${styles.open}`);
 }
 
 export default class Modal extends Component<Props> {
@@ -49,7 +50,7 @@ export default class Modal extends Component<Props> {
         className={styles.modalContainer}
         ref={this.modalContainerRef}
         onClick={(event) => {
-          closeModal(event, this.modalContainerRef);
+          closeModal(event, this.modalRef);
         }}
       >
         <div className={styles.modal} id={id} ref={this.modalRef}>
