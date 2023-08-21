@@ -18,6 +18,8 @@ import loggedInCheck from '@/lib/loggedInCheck';
 
 import type { projectData } from '@/types/projects/projectData';
 
+import styles from '@/Styles/sass/pages/projects.module.scss';
+
 export default class Projects extends Component {
   state = {
     content: {} as Record<string, unknown>,
@@ -182,7 +184,10 @@ export default class Projects extends Component {
               return;
             return (
               <>
-                <div className="project project-inactive" key={idKey}>
+                <div
+                  className={`${styles.project} ${styles['project-inactive']}`}
+                  key={idKey}
+                >
                   <h2>{name}</h2>
                   <p>{decodeURI(description)}</p>
                   <Slideshow slides={slides} />
