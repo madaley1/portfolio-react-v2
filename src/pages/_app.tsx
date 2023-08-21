@@ -7,7 +7,7 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Layout from '@/components/Layout';
 
 //Style Imports
-import '@/Styles/css/main.css';
+import '@/Styles/sass/Global.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
   const key = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;

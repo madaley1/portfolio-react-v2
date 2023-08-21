@@ -8,6 +8,9 @@ import Link from 'next/link';
 //image imports
 import logo from '@/Assets/images/logoLight.png';
 
+// style imports
+import styles from '@/Styles/sass/components/NavMenu.module.scss';
+
 // types
 type navItem = {
   name: string;
@@ -135,21 +138,29 @@ export default class NavMenu extends Component {
   }
 
   render() {
-    const classList = this.state.classes.join(' ');
+    const { classes } = this.state;
+    const classList = (classes: string[]) => {
+      return classes.map((value) => {
+        console.log(value, `${styles[value as string]}`);
+        if (!styles[value as string]) return value;
+        return `${styles[value as string]}`;
+      });
+    };
+
     return (
-      <nav className={classList} ref={this.navMenuRef}>
+      <nav className={classList(classes).join(' ')} ref={this.navMenuRef}>
         <Link href="/">
           <Image src={logo} alt="Portfolio logo" width="150" />
         </Link>
-        <ul className="navMenu-list">
+        <ul className={styles['navMenu-list']}>
           <li>
-            <Link className="navMenu-list-item" href="/">
+            <Link className={styles['navMenu-list-item']} href="/">
               Home
             </Link>
           </li>
           {this.state.navInfo.map((item: navItem) => (
             <li key={item.name}>
-              <Link className="navMenu-list-item" href={item.link}>
+              <Link className={styles['navMenu-list-item']} href={item.link}>
                 {item.name}
               </Link>
             </li>

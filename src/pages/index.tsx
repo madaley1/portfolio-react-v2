@@ -5,6 +5,8 @@ import Head from 'next/head';
 // logo import
 import logo from '@/Assets/images/logoLight.png';
 
+import styles from '@/Styles/sass/pages/index.module.scss';
+
 export default function Index() {
   return (
     <>
@@ -12,17 +14,17 @@ export default function Index() {
         <title>Home | Daley Development</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div id="index">
-        <header id="titleCard">
-          <div className="namePlate">
-            <div className="namePlate-image">
+      <div id={styles.index}>
+        <header id={styles.titleCard}>
+          <div className={styles.namePlate}>
+            <div className={styles['namePlate-image']}>
               <Image
                 src={logo}
                 alt="The light colour pallette of Morgan Daley's Logo"
                 id="logo"
               />
             </div>
-            <div className="namePlate-text">
+            <div className={styles['namePlate-text']}>
               <h1>Morgan Daley</h1>
               <p>Full Stack Engineer </p>
               <p>
@@ -37,7 +39,7 @@ export default function Index() {
             appreciate your patience, and feel free to check out the codebase
             in&nbsp;
             <a
-              className="link"
+              className={styles.link}
               href="https://github.com/madaley1/portfolio-react-v2"
             >
               the GitHub!

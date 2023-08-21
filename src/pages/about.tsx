@@ -14,6 +14,9 @@ import Loading from '@/components/Loading';
 // custom function imports
 import loggedInCheck from '@/lib/loggedInCheck';
 
+// style imports
+import styles from '@/Styles/sass/pages/about.module.scss';
+
 type content = {
   id: number;
   about_section: string;
@@ -86,7 +89,7 @@ export default class About extends Component<AboutState> {
     const content = this.state.content[0].id
       ? this.state.content.map((key: Record<string, any>, index: number) => {
           return (
-            <div className="about-section-card" key={index}>
+            <div className={styles['about-section-card']} key={index}>
               <h2>{key.about_section}</h2>
               <p>{decodeURI(key.about_text)}</p>
               <EditAboutCard
