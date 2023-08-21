@@ -7,6 +7,8 @@ import {
   withGoogleReCaptcha,
 } from 'react-google-recaptcha-v3';
 
+import styles from '@/Styles/sass/pages/contact.module.scss';
+
 class Contact extends Component {
   formRef = createRef<FormikProps<FormikValues>>();
 
@@ -58,7 +60,7 @@ class Contact extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <div id="contact">
+        <div id={styles.contact}>
           <h1>Contact Me</h1>
           <p>
             If you have any questions about my projects or would like to work

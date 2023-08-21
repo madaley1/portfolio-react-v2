@@ -5,6 +5,8 @@ import Image from 'next/image';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 
+import styles from '@/Styles/sass/components/Slideshow.module.scss';
+
 type SlideshowProps = {
   slides: Record<string, any> | null;
 };
@@ -35,13 +37,13 @@ const Slideshow = (props: SlideshowProps) => {
   if (keys.length === 0) return <></>;
 
   return (
-    <div className="slideshow">
+    <div className={styles.slideshow}>
       <div ref={sliderRef} className="keen-slider">
         {keys.map((id, index) => {
           const slide = slides[id];
           return (
             <div
-              className="slide keen-slider__slide"
+              className={`${styles.slide} keen-slider__slide`}
               key={index}
               data-slide={index}
             >
@@ -57,7 +59,7 @@ const Slideshow = (props: SlideshowProps) => {
           );
         })}
         {loaded && instanceRef.current !== undefined ? (
-          <div className="arrowContainer">
+          <div className={styles.arrowContainer}>
             <Arrow
               left
               onClick={(e: any) =>
@@ -84,7 +86,7 @@ const Slideshow = (props: SlideshowProps) => {
         )}
       </div>
       {loaded && instanceRef.current !== undefined ? (
-        <div className="dots">
+        <div className={styles.dots}>
           {[
             ...Array(
               instanceRef.current &&
@@ -97,7 +99,10 @@ const Slideshow = (props: SlideshowProps) => {
                 onClick={() => {
                   instanceRef.current?.moveToIdx(idx);
                 }}
-                className={'dot' + (currentSlide === idx ? ' active' : '')}
+                className={
+                  `${styles.dot}` +
+                  (currentSlide === idx ? ` ${styles.active}` : '')
+                }
               ></button>
             );
           })}
@@ -114,13 +119,13 @@ function Arrow(props: {
   left?: boolean;
   onClick: (e: any) => void;
 }) {
-  const disabeld = props.disabled ? ' arrow--disabled' : '';
+  const disabled = props.disabled ? ` ${styles['arrow--disabled']}` : '';
   return (
     <svg
       onClick={props.onClick}
-      className={`arrow ${
-        props.left ? 'arrow--left' : 'arrow--right'
-      } ${disabeld}`}
+      className={`${styles.arrow} ${
+        props.left ? `${styles['arrow--left']}` : `${styles['arrow--right']}`
+      } ${disabled}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

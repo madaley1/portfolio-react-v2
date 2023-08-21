@@ -6,6 +6,8 @@ import Head from 'next/head';
 //component imports
 import { Formik, Form, Field } from 'formik';
 
+import styles from '@/Styles/sass/pages/login.module.scss';
+
 export default class Login extends Component {
   submitRef: React.RefObject<HTMLButtonElement>;
   userRef: React.RefObject<HTMLInputElement>;
@@ -93,7 +95,7 @@ export default class Login extends Component {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <div id="login">
+        <div id={styles.login}>
           <h1>The Login</h1>
           <Formik
             key={1}

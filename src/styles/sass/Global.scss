@@ -141,3 +141,53 @@ button {
     color-scheme: dark;
   }
 }
+
+// Note: :has() does not currently work in firefox and other mozilla-based browsers
+:root {
+  --random-number: 5s;
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+
+:root:has(nav.green) {
+  --bright: rgb(0, 255, 128, 1);
+  --reflection-bright: rgb(0, 255, 128, 0.5);
+
+  --dim: rgba(0, 255, 128, 0.1);
+  --reflection-dim: rgba(0, 255, 128, 0.05);
+}
+
+:root:has(nav.blue) {
+  --bright: rgb(0, 174, 255);
+  --reflection-bright: rgba(0, 204, 255, 0.5);
+
+  --dim: rgba(0, 174, 255, 0.1);
+  --reflection-dim: rgba(0, 204, 255, 0.05);
+}
+
+:root:has(nav.purple) {
+  --bright: rgb(115, 0, 255);
+  --reflection-bright: rgba(115, 0, 255, 0.5);
+
+  --dim: rgba(115, 0, 255, 0.1);
+  --reflection-dim: rgba(115, 0, 255, 0.05);
+}
+
+:root:has(nav.yellow) {
+  --bright: rgb(217, 255, 0);
+  --reflection-bright: rgba(217, 255, 0, 0.5);
+
+  --dim: rgba(217, 255, 0, 0.1);
+  --reflection-dim: rgba(217, 255, 0, 0.05);
+}
+
+:root:has(nav.red) {
+  --bright: rgb(255, 0, 0);
+  --reflection-bright: rgba(255, 0, 0, 0.5);
+
+  --dim: rgba(255, 0, 0, 0.1);
+  --reflection-dim: rgba(255, 0, 0, 0.05);
+}

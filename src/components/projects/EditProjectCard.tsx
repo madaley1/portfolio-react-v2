@@ -16,6 +16,8 @@ import type { editModalFormProps } from '@/types/about/modalForm';
 // interface imports
 import { EditModalFormProps, ModalFormState } from '@/types/about/modalForm';
 
+import styles from '@/Styles/sass/components/Modal.module.scss';
+
 // interfaces
 interface ProjectModalFormState extends ModalFormState {
   fields: number;
@@ -163,7 +165,7 @@ export default class EditProjectCard extends Component<
     const firstLayer = this.state.modalRef.current;
     if (!firstLayer || !firstLayer.modalRef.current) return;
     const { current } = firstLayer.modalRef;
-    current.classList.add('open');
+    current.classList.add(`${styles.open}`);
   };
 
   addSlideToProject() {
