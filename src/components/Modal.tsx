@@ -50,7 +50,7 @@ export default class Modal extends Component<Props> {
         className={styles.modalContainer}
         ref={this.modalContainerRef}
         onClick={(event) => {
-          closeModal(event, this.modalRef);
+          closeModal(event, this.modalContainerRef);
         }}
       >
         <div className={styles.modal} id={id} ref={this.modalRef}>
