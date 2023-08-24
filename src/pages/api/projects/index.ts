@@ -95,7 +95,7 @@ export default async function handler(req: any, res: any) {
         const insertSlideQueries: string[] = [];
 
         // active project table work
-        //#region]
+        //#region
         if (!current) return;
         const { projects } = current;
 
@@ -105,7 +105,7 @@ export default async function handler(req: any, res: any) {
           }
         });
         activeProjectEntries.sort((a, b) => {
-          return a.id - b.id;
+          return b.id - a.id;
         });
 
         Object.entries(active).forEach(async ([key, value], index) => {
@@ -116,11 +116,21 @@ export default async function handler(req: any, res: any) {
           } else {
             tempTableQuery += `id = ${key};`;
           }
-          updateTableQueries.push(
-            `UPDATE reorder SET new_id = ${key} WHERE id = ${
+          if (
+            !(
               activeProjectEntries[
                 value as keyof typeof activeProjectEntries
               ] as Record<string, any>
+            ).id
+          )
+            return;
+          updateTableQueries.push(
+            `UPDATE reorder SET new_id = ${key} WHERE id = ${
+              (
+                activeProjectEntries[
+                  value as keyof typeof activeProjectEntries
+                ] as Record<string, any>
+              ).id
             };`
           );
           updateSlideQueries.push(
@@ -165,7 +175,6 @@ export default async function handler(req: any, res: any) {
         );
 
         ids.forEach((id, index) => {
-          console.log(ids.length, index + 1);
           if (ids.length !== index + 1) {
             tempSlideTableQuery += `slideshow_id = ${id} OR `;
           } else {
@@ -175,30 +184,24 @@ export default async function handler(req: any, res: any) {
             `INSERT INTO project_slides (slideshow_id, slide_number, slide_path, slide_description) SELECT new_id, slide_number, slide_path, slide_description FROM slide_reorder WHERE new_id = ${id};`
           );
         });
-        console.log(tempSlideTableQuery);
         await client.query(tempSlideTableQuery);
         ids.forEach(async (id, index) => {
-          console.log(`DELETE FROM project_slides WHERE id = ${id};`);
           await client.query(
-            `DELETE FROM project_slides WHERE slideshow_id = ${id}`
+            `DELETE FROM project_slides WHERE slideshow_id = ${id};`
           );
         });
-        console.log(alterSlideTableQuery);
         await client.query(alterSlideTableQuery);
 
         updateSlideQueries.forEach(async (query, index) => {
-          console.log(updateSlideQueries[index]);
           await client.query(query);
         });
 
         insertSlideQueries.forEach(async (query, index) => {
-          console.log(insertSlideQueries[index]);
           await client.query(query);
         });
         res.status(200).json({ message: 'updated' });
       }
       if (inactive.updated) {
-        console.log(inactive);
         delete inactive.updated;
       }
     } else if (req.method === 'PATCH') {
@@ -240,7 +243,6 @@ export default async function handler(req: any, res: any) {
       res.status(200).json({ message: 'updated' });
     } else if (req.method === 'DELETE') {
       const { id } = req.query;
-      console.log(id);
       const projectDelete = `DELETE FROM projects WHERE id = ${id}`;
       const projectSlidesDelete = `DELETE FROM project_slides WHERE slideshow_id = ${id}`;
       await client.query(projectDelete);
