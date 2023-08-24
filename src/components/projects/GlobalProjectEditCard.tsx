@@ -49,7 +49,7 @@ export default class GlobalProjectEditCard extends Component<
         id: 'project-card-gobal-edit-cancel',
         text: 'Cancel',
         type: 'button',
-        onClick: closeModal,
+        onClick: this.closeModalHandler.bind(this),
       },
     ];
     this.state.projectData = this.props.projectData;
@@ -89,6 +89,12 @@ export default class GlobalProjectEditCard extends Component<
       console.log(encodeURIComponent(JSON.stringify(values)));
       xhr.send(encodeURIComponent(JSON.stringify(values)));
     });
+  }
+
+  closeModalHandler(e: React.MouseEvent<HTMLElement>) {
+    const { modalRef } = this.state;
+    if (!modalRef || !(e.target instanceof HTMLElement)) return;
+    closeModal(e, modalRef);
   }
 
   submitModalHandler(e: React.MouseEvent<HTMLElement>) {
@@ -161,7 +167,7 @@ export default class GlobalProjectEditCard extends Component<
     });
     const { projectData } = this.state;
     if (projectData.length > 0) {
-      this.state.projectData.forEach((project, index) => {
+      this.state.projectData.forEach((project) => {
         if (project.status === 'active') {
           initialValues.active[
             `${project.id}` as keyof typeof initialValues.active

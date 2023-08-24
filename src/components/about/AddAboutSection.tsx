@@ -42,9 +42,15 @@ export default class AddAboutSection extends Component<
         id: 'about-card-add-cancel',
         text: 'Cancel',
         type: 'button',
-        onClick: closeModal,
+        onClick: this.closeModalHandler.bind(this),
       },
     ];
+  }
+
+  closeModalHandler(e: React.MouseEvent<HTMLElement>) {
+    const { modalRef } = this.state;
+    if (!modalRef || !(e.target instanceof HTMLElement)) return;
+    closeModal(e, modalRef);
   }
 
   addNewSection(e: React.MouseEvent<HTMLElement>) {
