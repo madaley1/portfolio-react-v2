@@ -13,13 +13,22 @@ type Props = {
 
 export function closeModal(
   e: React.MouseEvent<HTMLElement>,
-  intendedTarget?: React.RefObject<HTMLDivElement>
+  modalRef: React.RefObject<Modal | HTMLElement> | null
 ) {
   e.preventDefault();
-  if (!(e.target instanceof HTMLElement) || !intendedTarget) return;
-  if (!intendedTarget.current) return;
-  console.log(intendedTarget.current);
-  intendedTarget.current.classList.remove(`${styles.open}`);
+  console.log(e, modalRef);
+  if (!(e.target instanceof HTMLElement) || !modalRef) return;
+  if (modalRef.current instanceof Modal) {
+    if (!modalRef.current || !modalRef.current.modalRef.current) return;
+    const { current } = modalRef.current.modalRef;
+    if (!current) return;
+    current.classList.remove(`${styles.open}`);
+  } else if (modalRef.current instanceof HTMLElement) {
+    if (!modalRef.current || !(modalRef.current instanceof HTMLElement)) return;
+    const modal = modalRef.current.querySelector(`.${styles.open}`);
+    if (!modal) return;
+    modal.classList.remove(`${styles.open}`);
+  }
 }
 
 export default class Modal extends Component<Props> {
@@ -50,7 +59,8 @@ export default class Modal extends Component<Props> {
         className={styles.modalContainer}
         ref={this.modalContainerRef}
         onClick={(event) => {
-          closeModal(event, this.modalRef);
+          if (event.target !== this.modalContainerRef.current) return;
+          closeModal(event, this.modalContainerRef);
         }}
       >
         <div className={styles.modal} id={id} ref={this.modalRef}>

@@ -74,7 +74,7 @@ export default class Projects extends Component {
           if (project.id)
             projectsArray.push(project as Record<string, string | number>);
         });
-        projectsArray.sort((a, b) => parseInt(`${a.id}`) - parseInt(`${b.id}`));
+        projectsArray.sort((a, b) => parseInt(`${b.id}`) - parseInt(`${a.id}`));
         const slideshows: Record<number, unknown> = this.filterSlidesToShows(
           projectSlides,
           projectsArray
@@ -153,7 +153,7 @@ export default class Projects extends Component {
             if (!a || !b) {
               return 0;
             } else {
-              return parseInt(`${a.id}`) - parseInt(`${b.id}`);
+              return parseInt(`${b.id}`) - parseInt(`${a.id}`);
             }
           });
           this.setState({ projectData: processedData });

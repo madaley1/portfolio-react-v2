@@ -43,7 +43,7 @@ export default class EditAboutCard extends Component<
         id: `about-card-${props.index}-edit-cancel`,
         text: 'Cancel',
         type: 'button',
-        onClick: closeModal,
+        onClick: this.closeModalHandler.bind(this),
       },
       {
         id: `about-card-${props.index}-edit-delete`,
@@ -52,6 +52,12 @@ export default class EditAboutCard extends Component<
         onClick: this.deleteModalHandler.bind(this),
       },
     ];
+  }
+
+  closeModalHandler(e: React.MouseEvent<HTMLElement>) {
+    const { modalRef } = this.state;
+    if (!modalRef || !(e.target instanceof HTMLElement)) return;
+    closeModal(e, modalRef);
   }
 
   submitModal(e: React.MouseEvent<HTMLElement>) {

@@ -39,8 +39,8 @@ export default async function handler(req: any, res: any) {
           const query = `INSERT INTO project_slides (slideshow_id, slide_number, slide_path, slide_description) VALUES(${projectId}, ${index}, '${path}', '${description}')`;
           await client.query(query);
         });
-        res.status(200).json(rows);
       }
+      res.status(200).json(rows);
     } else if (req.method === 'PUT') {
       const { active, inactive } = JSON.parse(decodeURIComponent(req.body));
       if (!active && !inactive) {
@@ -95,7 +95,7 @@ export default async function handler(req: any, res: any) {
         const insertSlideQueries: string[] = [];
 
         // active project table work
-        //#region]
+        //#region
         if (!current) return;
         const { projects } = current;
 
@@ -105,7 +105,7 @@ export default async function handler(req: any, res: any) {
           }
         });
         activeProjectEntries.sort((a, b) => {
-          return a.id - b.id;
+          return b.id - a.id;
         });
 
         Object.entries(active).forEach(async ([key, value], index) => {
@@ -116,11 +116,21 @@ export default async function handler(req: any, res: any) {
           } else {
             tempTableQuery += `id = ${key};`;
           }
-          updateTableQueries.push(
-            `UPDATE reorder SET new_id = ${key} WHERE id = ${
+          if (
+            !(
               activeProjectEntries[
                 value as keyof typeof activeProjectEntries
               ] as Record<string, any>
+            ).id
+          )
+            return;
+          updateTableQueries.push(
+            `UPDATE reorder SET new_id = ${key} WHERE id = ${
+              (
+                activeProjectEntries[
+                  value as keyof typeof activeProjectEntries
+                ] as Record<string, any>
+              ).id
             };`
           );
           updateSlideQueries.push(
@@ -165,7 +175,6 @@ export default async function handler(req: any, res: any) {
         );
 
         ids.forEach((id, index) => {
-          console.log(ids.length, index + 1);
           if (ids.length !== index + 1) {
             tempSlideTableQuery += `slideshow_id = ${id} OR `;
           } else {
@@ -175,31 +184,150 @@ export default async function handler(req: any, res: any) {
             `INSERT INTO project_slides (slideshow_id, slide_number, slide_path, slide_description) SELECT new_id, slide_number, slide_path, slide_description FROM slide_reorder WHERE new_id = ${id};`
           );
         });
-        console.log(tempSlideTableQuery);
         await client.query(tempSlideTableQuery);
         ids.forEach(async (id, index) => {
-          console.log(`DELETE FROM project_slides WHERE id = ${id};`);
           await client.query(
-            `DELETE FROM project_slides WHERE slideshow_id = ${id}`
+            `DELETE FROM project_slides WHERE slideshow_id = ${id};`
           );
         });
-        console.log(alterSlideTableQuery);
         await client.query(alterSlideTableQuery);
 
         updateSlideQueries.forEach(async (query, index) => {
-          console.log(updateSlideQueries[index]);
           await client.query(query);
         });
 
         insertSlideQueries.forEach(async (query, index) => {
-          console.log(insertSlideQueries[index]);
           await client.query(query);
         });
         res.status(200).json({ message: 'updated' });
       }
       if (inactive.updated) {
-        console.log(inactive);
         delete inactive.updated;
+        // project table vars
+        //#region
+        let tempTableQuery =
+          'CREATE TEMPORARY TABLE reorder AS SELECT id, name, description, status FROM projects WHERE ';
+        const alterTableQuery = 'ALTER TABLE reorder ADD COLUMN new_id INT;';
+        const updateTableQueries: string[] = [];
+        const insertTableQueries: string[] = [];
+        const inactiveProjectEntries: Record<string, any>[] = [];
+        //#endregion
+
+        // project slides table vars
+        let tempSlideTableQuery =
+          'CREATE TEMPORARY TABLE slide_reorder AS SELECT slideshow_id, slide_number, slide_path, slide_description FROM project_slides WHERE ';
+        const inactiveSlideEntries: Record<string, any>[] = [];
+        const updateSlideQueries: string[] = [];
+        const alterSlideTableQuery =
+          'ALTER TABLE slide_reorder ADD COLUMN new_id INT;';
+        const insertSlideQueries: string[] = [];
+
+        // inactive project table work
+        //#region
+        if (!current) return;
+        const { projects } = current;
+
+        Object.entries(projects as Record<any, any>).forEach(([key, value]) => {
+          if (value.status === 'inactive') {
+            inactiveProjectEntries.push(value);
+          }
+        });
+        inactiveProjectEntries.sort((a, b) => {
+          return b.id - a.id;
+        });
+
+        Object.entries(inactive).forEach(async ([key, value], index) => {
+          if (!inactiveProjectEntries[value as number])
+            res.status(500).json({ error: 'no projects' });
+          if (Object.entries(inactive).length !== index + 1) {
+            tempTableQuery += `id = ${key} OR `;
+          } else {
+            tempTableQuery += `id = ${key};`;
+          }
+          if (
+            !(
+              inactiveProjectEntries[
+                value as keyof typeof inactiveProjectEntries
+              ] as Record<string, any>
+            ).id
+          )
+            return;
+          updateTableQueries.push(
+            `UPDATE reorder SET new_id = ${key} WHERE id = ${
+              (
+                inactiveProjectEntries[
+                  value as keyof typeof inactiveProjectEntries
+                ] as Record<string, any>
+              ).id
+            };`
+          );
+          updateSlideQueries.push(
+            `UPDATE slide_reorder SET new_id = ${key} WHERE slideshow_id = ${
+              (
+                inactiveProjectEntries[
+                  value as keyof typeof inactiveProjectEntries
+                ] as Record<string, any>
+              ).id
+            };`
+          );
+          insertTableQueries.push(
+            `INSERT INTO projects (id, name, description, status) SELECT new_id, name, description, status FROM reorder WHERE new_id = ${key};`
+          );
+        });
+        await client.query(tempTableQuery);
+        await client.query(alterTableQuery);
+        Object.entries(inactive).forEach(async ([key, value], index) => {
+          await client.query(`DELETE FROM projects WHERE id = ${key}`);
+        });
+        updateTableQueries.forEach(async (query, index) => {
+          await client.query(query);
+        });
+
+        insertTableQueries.forEach(async (query, index) => {
+          await client.query(query);
+        });
+        //#endregion
+
+        // get inactive project ids
+        const ids: number[] = inactiveProjectEntries.map((project) => {
+          return project.id;
+        });
+
+        // inactive project slides table work
+        Object.entries(current.projectSlides as Record<any, any>).forEach(
+          ([key, value]) => {
+            if (ids.includes(value.slideshow_id)) {
+              inactiveSlideEntries.push(value);
+            }
+          }
+        );
+
+        ids.forEach((id, index) => {
+          if (ids.length !== index + 1) {
+            tempSlideTableQuery += `slideshow_id = ${id} OR `;
+          } else {
+            tempSlideTableQuery += `slideshow_id = ${id};`;
+          }
+          insertSlideQueries.push(
+            `INSERT INTO project_slides (slideshow_id, slide_number, slide_path, slide_description) SELECT new_id, slide_number, slide_path, slide_description FROM slide_reorder WHERE new_id = ${id};`
+          );
+        });
+        await client.query(tempSlideTableQuery);
+        ids.forEach(async (id, index) => {
+          await client.query(
+            `DELETE FROM project_slides WHERE slideshow_id = ${id};`
+          );
+        });
+        await client.query(alterSlideTableQuery);
+
+        updateSlideQueries.forEach(async (query, index) => {
+          await client.query(query);
+        });
+
+        insertSlideQueries.forEach(async (query, index) => {
+          await client.query(query);
+        });
+        res.status(200).json({ message: 'updated' });
       }
     } else if (req.method === 'PATCH') {
       const { id, title, text, status, slides } = JSON.parse(
@@ -240,7 +368,6 @@ export default async function handler(req: any, res: any) {
       res.status(200).json({ message: 'updated' });
     } else if (req.method === 'DELETE') {
       const { id } = req.query;
-      console.log(id);
       const projectDelete = `DELETE FROM projects WHERE id = ${id}`;
       const projectSlidesDelete = `DELETE FROM project_slides WHERE slideshow_id = ${id}`;
       await client.query(projectDelete);
